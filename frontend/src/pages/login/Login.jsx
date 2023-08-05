@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import "./Login.css";
 import { useContext, useRef } from 'react';
 import { loginCall } from '../../state/ActionCalls';
@@ -25,36 +26,33 @@ export default function Login() {
     console.log(user)
 
   return (
-    <div className="login">
-        <div className="loginWrapper">
-            <div className="loginLeft">
-                <h3 className="loginLogo">Real SNS</h3>
-                <span className="loginDesc">Create SNS by yourself!</span>
-            </div>
-            <div className="loginRight">
-                <form className="loginBox" onSubmit={(e) => handleSubmit(e)}>
-                    <p className="loginMsg">Login</p>
-                    <input
-                    type="email"
-                    className="loginInput"
-                    placeholder="Email"
-                    required
-                    ref={email} //useRef
-                    />
-                    <input
-                    type="password"
-                    className="loginInput"
-                    required
-                    minLength="6"
-                    placeholder="Password"
-                    ref={password}
-                    />
-                    <button className="loginButton">Login</button>
-                    <span className="loginForgot">Forget your password</span>
-                    <button className="loginRegisterButton">Create an account</button>
-                </form>
-            </div>
+    <>
+        <div className="login-container">
+            <form className='login-form' onSubmit={(e) => handleSubmit(e)}>
+                <h1 className='login-title'>Login</h1>
+                <input
+                className='login-input'
+                type='email'
+                placeholder="Email"
+                required
+                ref={email} //useRef
+                />
+                <input
+                className='login-input'
+                type='password'
+                placeholder="Password"
+                required
+                minLength="6"
+                ref={password}
+                />
+                <button className='loginButton'>Login</button>
+                <span className='login-span'>
+                Don't have an account? <Link className="login-link" to="/register"> Register</Link>
+                </span>
+                    {/* <span className="loginForgot">Forget your password</span>
+                    <button className="loginRegisterButton">Create an account</button> */}
+            </form>
         </div>
-    </div>
+    </>
   )
 }

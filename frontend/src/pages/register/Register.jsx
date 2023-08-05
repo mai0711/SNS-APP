@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { Link } from 'react-router-dom'
 import "./Register.css";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -34,54 +35,50 @@ export default function Register() {
     };
 
   return (
-    <div>
-        <div className="login">
+    <>
+        <div className='register-container'>
             <div className="loginWrapper">
-                <div className="loginLeft">
-                    <h3 className="loginLogo">Real SNS</h3>
-                    <span className="loginDesc">Create SNS by yourself!</span>
-                </div>
-                <div className="loginRight">
-                    <form className="loginBox" onSubmit={(e) => handleClick(e)}>
-                        <p className="loginMsg">Register an account</p>
-                        <input
-                        type="text"
-                        className="loginInput"
-                        placeholder="Username"
-                        required
-                        ref={username}
-                        />
-                        <input
-                        type="email"
-                        className="loginInput"
-                        placeholder="Email"
-                        required
-                        ref={email}
-                        />
-                        <input
-                        type="password"
-                        className="loginInput"
-                        placeholder="Password"
-                        required
-                        minLength="6"
-                        ref={password}
-                        />
-                        <input
-                        type="password"
-                        className="loginInput"
-                        placeholder="Confirm Password"
-                        required
-                        minLength="6"
-                        ref={confirmPassword}
-                        />
-                        <button className="loginButton" type="submit">
-                        Sign Up
-                        </button>
-                        <button className="loginRegisterButton">Login</button>
+                <form className='register-form' onSubmit={(e) => handleClick(e)}>
+                    <h1 className='register-title'>Register</h1>
+                    <input
+                    className='register-input'
+                    type='text'
+                    placeholder="Username"
+                    name="username"
+                    required
+                    ref={username}
+                    />
+                    <input
+                    className='register-input'
+                    type='email'
+                    placeholder="Email"
+                    required
+                    ref={email}
+                    />
+                    <input
+                    className='register-input'
+                    type='password'
+                    placeholder="Password"
+                    required
+                    minLength="6"
+                    ref={password}
+                    />
+                    <input
+                    className='register-input'
+                    type='password'
+                    placeholder="Confirm Password"
+                    required
+                    minLength="6"
+                    ref={confirmPassword}
+                    />
+                    <button type="submit" className='registerButton'>Create User</button>
+                    <span className='register-span'>
+                        Already have an account? <Link className='register-link' to="/login"> Login</Link>
+                    </span>
+                        {/* <button className="loginRegisterButton">Login</button> */}
                     </form>
-                </div>
             </div>
         </div>
-    </div>
+    </>
   )
 }

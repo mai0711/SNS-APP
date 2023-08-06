@@ -15,9 +15,9 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={user ? <Home /> : <Register />} />{/* userがなければ新規登録 */}
-          <Route path='/register' element={user ? <Navigate to="/" /> : <Register />} />
-          <Route path='/login' element={user ? <Navigate to="/" /> : <Login />} /> {/* ログインに成功したらホームにいく */}
+          <Route path='/' element={<Home />} />{/* userがなければ新規登録 */}
+          <Route path='/register' element={user ? <Navigate to="/profile/:username" /> : <Register />} />
+          <Route path='/login' element={user ? <Navigate to={`/profile/${user.username}`} /> : <Login />} /> {/* ログインに成功したらホームにいく */}
           <Route path='/profile/:username' element={<Profile />} />
           {/* :usernameの部分はuseParamsを使ってとれる */}
         </Routes>

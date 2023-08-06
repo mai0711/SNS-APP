@@ -9,8 +9,6 @@ export default function Topbar() {
     const { user } = useContext(AuthContext);
 
     const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
-    console.log(PUBLIC_FOLDER)
-
 
   return (
     <div className="topbarContainer">

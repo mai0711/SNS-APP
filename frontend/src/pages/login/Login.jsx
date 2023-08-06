@@ -49,8 +49,6 @@ export default function Login() {
                 <span className='login-span'>
                 Don't have an account? <Link className="login-link" to="/register"> Register</Link>
                 </span>
-                    {/* <span className="loginForgot">Forget your password</span>
-                    <button className="loginRegisterButton">Create an account</button> */}
             </form>
         </div>
     </>

@@ -1,7 +1,7 @@
 import React from 'react'
 import "./Rightbar.css"
-import { Users } from '../../dummyData'
-import Online from '../online/Online'
+import { Friends } from '../../dummyData'
+import Friend from '../Friend/Friend'
 
 export default function Rightbar({profile}) {
 
@@ -28,8 +28,8 @@ export default function Rightbar({profile}) {
         />
         <h4 className='rightbarTitle'>Online Friends</h4>
         <ul className="rightbarFriendList">
-          {Users.map((user) => (
-            <Online user={user} key={user.id} />
+          {Friends.map((user) => (
+            <Friend user={user} key={user.id} />
           ))}
         </ul>
         <p className='promotionTitle'>Advertisement</p>

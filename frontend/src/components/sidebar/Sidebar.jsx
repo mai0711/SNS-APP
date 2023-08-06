@@ -1,7 +1,7 @@
 import React from 'react'
 import "./Sidebar.css"
 import { Search, Person, Notifications, Home, MessageRounded, Bookmark, Settings } from "@mui/icons-material";
-import { Users } from '../../dummyData'
+import { Friends } from '../../dummyData'
 import CloseFriend from '../closeFriend/CloseFriend';
 import { Link } from "react-router-dom";
 
@@ -53,7 +53,7 @@ export default function Sidebar() {
             </ul>
             <hr className="sidebarHr" />
             <ul className="sidebarFriendList">
-            {Users.map((user) => (
+            {Friends.map((user) => (
                 <CloseFriend  user={user} key={user.id} />
             ))}
             </ul>

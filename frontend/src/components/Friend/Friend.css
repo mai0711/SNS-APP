@@ -1,0 +1,13 @@
+.friendList {
+    list-style: none;
+}
+
+.friendProfileImg {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+.friendUsername {
+    font-weight: bold;
+}

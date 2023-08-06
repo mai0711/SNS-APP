@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 export default function Post({ post }) {
 
-    const PUBLIC_FOLDER = "http://localhost:3000/assets"
+    const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
 
     const [ like, setLike ] = useState(post.likes.length);
     const [ isLiked, setIsLiked ] = useState(false);
@@ -64,7 +64,7 @@ export default function Post({ post }) {
             <div className="postBottomLeft">
                 <img
                 className="likeIcon"
-                src={PUBLIC_FOLDER + "/heart.png"}
+                src={PUBLIC_FOLDER + "/assets/heart.png"}
                 alt=""
                 onClick={() => handleLike()}
                 />

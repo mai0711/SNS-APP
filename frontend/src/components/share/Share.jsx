@@ -4,7 +4,7 @@ import { Image, Gif, Face, Analytics } from "@mui/icons-material";
 
 export default function Share() {
 
-  const PUBLIC_FOLDER = "http://localhost:3000/assets";
+  const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
 
   return (
     <div className='share'>

@@ -30,7 +30,7 @@ export default function Timeline({username}) { //Profile.jsxからpropsで受け
       <div className="timelineWrapper">
         <Share />
         {posts.map((post) => ( //useStateのposts
-          <Post post={post} key={post._id} /> //postをpropsでprops.jsxに渡す
+          <Post post={post} key={post._id} /> //postをpropsでpost.jsxに渡す
         ))}
       </div>
     </div>

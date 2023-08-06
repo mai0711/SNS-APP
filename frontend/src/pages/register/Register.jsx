@@ -75,7 +75,6 @@ export default function Register() {
                     <span className='register-span'>
                         Already have an account? <Link className='register-link' to="/login"> Login</Link>
                     </span>
-                        {/* <button className="loginRegisterButton">Login</button> */}
                     </form>
             </div>
         </div>

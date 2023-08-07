@@ -22,7 +22,7 @@ function App() {
           <Route path='/login' element={user ? <Navigate to={`/profile/${user.username}`} /> : <Login />} /> {/* ログインに成功したらホームにいく */}
           <Route path='/profile/:username' element={<Profile />} />
           <Route path='/post' element={<Post />} />
-          <Route path='/favorite' element={<Favorite />} />
+          <Route path='/favorite/:username' element={<Favorite />} />
           {/* :usernameの部分はuseParamsを使ってとれる */}
         </Routes>
       </BrowserRouter>

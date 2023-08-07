@@ -40,7 +40,7 @@ function Header() {
                     <Link className="headerLink" to="/post"><PostAddIcon /></Link>
                 </div>
                 <div className="headerIconItem">
-                    <Link className="headerLink" to="/favorite"><FavoriteBorderIcon /></Link>
+                    <Link className="headerLink" to={`/favorite/${user.username}`}><FavoriteBorderIcon /></Link>
                 </div>
                 <div className="headerIconItem">
                     <Link className="headerLink" to="/"><LogoutIcon /></Link>

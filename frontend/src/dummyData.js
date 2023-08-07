@@ -1,7 +1,7 @@
 export const Friends = [
     {
       id: 1,
-      profilePicture: "/assets/person/noAvatar.png",
+      profilePicture: "/assets/person/1.jpeg",
       username:  "Olivia",
     },
     {

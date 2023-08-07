@@ -5,6 +5,10 @@ const PostSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    title: {
+        type: String,
+        max: 200
+    },
     description: {
         type: String,
         max: 200

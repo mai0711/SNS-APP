@@ -6,6 +6,7 @@ import Profile from './pages/profile/Profile';
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import { AuthContext } from './state/AuthContext';
+import Favorite from './pages/favorite/Favorite';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
           <Route path='/register' element={user ? <Navigate to="/profile/:username" /> : <Register />} />
           <Route path='/login' element={user ? <Navigate to={`/profile/${user.username}`} /> : <Login />} /> {/* ログインに成功したらホームにいく */}
           <Route path='/profile/:username' element={<Profile />} />
+          <Route path='/favorite' element={<Favorite />} />
           {/* :usernameの部分はuseParamsを使ってとれる */}
         </Routes>
       </BrowserRouter>

@@ -1,8 +1,8 @@
+import "./Favorite.css"
 import React from 'react'
-import "./Share.css"
 import { Image, Gif, Face, Analytics } from "@mui/icons-material";
 
-export default function Share() {
+export default function Favorite() {
 
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
 
@@ -11,7 +11,7 @@ export default function Share() {
       <div className="shareWArapper">
         <div className="shareTop">
           <img
-          src={PUBLIC_FOLDER + "/person/noAvatar.png"}
+          src={PUBLIC_FOLDER + "/assets/person/noAvatar.png"}
           alt=''
           className='shareProfileImg'
           />

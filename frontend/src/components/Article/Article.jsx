@@ -1,20 +1,91 @@
 import React from 'react'
+import { useState, useEffect } from 'react';
+import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
+import axios from "axios";
+import { Link } from "react-router-dom";
 
-function Article() {
+function Article({ post }) {
+
+  const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  const [user, setUser] = useState({}); //投稿したユーザーのデータ
+  // const [ like, setLike ] = useState(post.likes.length);
+  // const [ isLiked, setIsLiked ] = useState(false);
+
+
+
+//postを表示するため 投稿した人のuserデータをとる
+// post.userIdが変わるたびに以下が呼び出される
+useEffect(() => {
+  const fetchUser = async() => {
+  const response = await axios.get(`/users?userId=${post.userId}`); //users.jsの４
+  //user.jsのget. postはtimeline.jsxで受け取ったprops userIdはmodels/User.jsのuserId. post.userIdは投稿したユーザーのuserId
+      console.log(response);
+      setUser(response.data);
+  };
+  fetchUser();
+}, [post.userId]);
+
+
+
+//いいねの
+// post.userIdが変わるたびに以下が呼び出される
+// useEffect(() => {
+//   const fetchUser = async() => {
+//   const response = await axios.get(`/users?userId=${post.userId}`); //user情報をgetする
+//   //user.jsのget. postはtimeline.jsxで受け取ったprops userIdはmodels/User.jsのuserId. post.userIdは投稿したユーザーのuserId
+//       // console.log(response);
+//       setUser(response.data);
+//   };
+//   fetchUser();
+// }, [post.userId]);
+
+
+//like button
+// const handleLike = () => {
+//   setLike(isLiked ? like -1 : like +1);
+//   setIsLiked(!isLiked);
+// };
+
+
   return (
     <>
-    <Card>
-        <Card.Img variant="top" src="https://images.unsplash.com/photo-1516641396056-0ce60a85d49f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fCVFOCVBOCU5OCVFNCVCQSU4QnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60" alt= "" />
-        <Card.Body>
-        <Card.Title>Card title</Card.Title>
-        <Card.Text>
-            This is a longer card with supporting text below as a natural
-            lead-in to additional content. This content is a little bit
-            longer.
-        </Card.Text>
-        </Card.Body>
-    </Card>
+      <Col>
+        <Card className='card'>
+          <div className='postUser'>
+              <Link to={`/profile/${user.username}`} >
+                <img
+                src={ user.profilePicture || PUBLIC_FOLDER + "/assets/person/noAvatar.png"}
+                alt=''
+                className='postProfileImg'
+                />
+              </Link>
+                <span className='postUsername'>{ user.username }</span>
+                {/* <span className="postData">{format(post.createdAt)}</span> */}
+          </div>
+          <Card.Img
+          variant="top"
+          src={post.img || PUBLIC_FOLDER + "/assets/person/noAvatar.png"}
+          />
+          <Card.Body>
+            <Card.Title>{post.title}</Card.Title>
+            <Card.Text>
+              {post.description}
+            </Card.Text>
+          </Card.Body>
+
+          <div className="postBottomLeft">
+            <img
+            className="likeIcon"
+            src={PUBLIC_FOLDER + "/assets/heart.png"}
+            alt=""
+            // onClick={() => handleLike()}
+            />
+            <span className="postLikeCounter">4 people like it</span>
+          </div>
+        </Card>
+      </Col>
     </>
   )
 }

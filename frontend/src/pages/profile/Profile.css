@@ -73,17 +73,6 @@
 }
 
 
-.friends h4 {
-    text-align: center;
-    margin-top: 5px;
-}
-
-.friendsImg {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-}
-
 .profile-second-container {
     min-height: 100vh;
     min-width: 100vw;

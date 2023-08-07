@@ -32,9 +32,6 @@ useEffect(() => {
 }, [username]);
 
 
-
-
-
   return (
     <>
       <Header />

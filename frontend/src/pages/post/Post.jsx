@@ -3,6 +3,7 @@ import React, { useContext, useRef } from 'react'
 import { Image, Gif, Face, Analytics } from "@mui/icons-material";
 import { AuthContext } from "../../state/AuthContext"
 import axios from 'axios';
+import Header from "../../components/Header/Header";
 
 export default function Post() {
 
@@ -20,11 +21,15 @@ export default function Post() {
         //api
         try {
           await axios.post("/posts", newPost); //post.jsの1
+          window.location.reload(); //投稿した後、自分でリロードしなくても良くなる
         } catch(err) {
             console.log(err);
         }
+    }
 
   return (
+    <>
+    <Header />
     <div className='share'>
         <div className="shareWArapper">
             <div className="shareTop">
@@ -65,5 +70,6 @@ export default function Post() {
             </form>
         </div>
     </div>
+    </>
   )
 }

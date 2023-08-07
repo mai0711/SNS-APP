@@ -6,8 +6,8 @@ import Profile from './pages/profile/Profile';
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import Post from "./pages/post/Post";
-import { AuthContext } from './state/AuthContext';
 import Favorite from './pages/favorite/Favorite';
+import { AuthContext } from './state/AuthContext';
 
 function App() {
 

@@ -1,4 +1,5 @@
 import './Header.css'
+import { useContext } from 'react';
 import { Link } from 'react-router-dom'
 import SearchIcon from '@mui/icons-material/Search';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -6,8 +7,13 @@ import PostAddIcon from '@mui/icons-material/PostAdd';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
+import { AuthContext } from '../../state/AuthContext';
 
 function Header() {
+
+    const { user } = useContext(AuthContext);
+
+
   return (
     <div className="headerContainer">
         <div className="headerLeft">
@@ -28,10 +34,10 @@ function Header() {
                     <Link className="headerLink" to="/"><HomeIcon /></Link>
                 </div>
                 <div className="headerIconItem">
-                    <Link className="headerLink" to="/profile"><PersonIcon /></Link>
+                    <Link className="headerLink" to={`/profile/${user.username}`}><PersonIcon /></Link>
                 </div>
                 <div className="headerIconItem">
-                    {/* <Link className="headerLink" to="/poste"><PostAddIcon /></Link> */}
+                    <Link className="headerLink" to="/post"><PostAddIcon /></Link>
                 </div>
                 <div className="headerIconItem">
                     <Link className="headerLink" to="/favorite"><FavoriteBorderIcon /></Link>

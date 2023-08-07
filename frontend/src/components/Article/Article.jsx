@@ -1,17 +1,21 @@
 import React from 'react'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { format } from "timeago.js";
+import { AuthContext } from "../../state/AuthContext"
 
 function Article({ post }) {
 
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
 
+  const { user: currentUser } = useContext(AuthContext); //ログインしているユーザー
+
   const [user, setUser] = useState({}); //投稿したユーザーのデータ
-  // const [ like, setLike ] = useState(post.likes.length);
-  // const [ isLiked, setIsLiked ] = useState(false);
+  const [ like, setLike ] = useState(post.likes.length);
+  const [ isLiked, setIsLiked ] = useState(false);
 
 
 
@@ -30,23 +34,28 @@ useEffect(() => {
 
 
 //いいねの
-// post.userIdが変わるたびに以下が呼び出される
-// useEffect(() => {
-//   const fetchUser = async() => {
-//   const response = await axios.get(`/users?userId=${post.userId}`); //user情報をgetする
-//   //user.jsのget. postはtimeline.jsxで受け取ったprops userIdはmodels/User.jsのuserId. post.userIdは投稿したユーザーのuserId
-//       // console.log(response);
-//       setUser(response.data);
-//   };
-//   fetchUser();
-// }, [post.userId]);
+post.userIdが変わるたびに以下が呼び出される
+useEffect(() => {
+  const fetchUser = async() => {
+  const response = await axios.get(`/users?userId=${post.userId}`); //user情報をgetする
+  //user.jsのget. postはtimeline.jsxで受け取ったprops userIdはmodels/User.jsのuserId. post.userIdは投稿したユーザーのuserId
+      // console.log(response);
+      setUser(response.data);
+  };
+  fetchUser();
+}, [post.userId]);
 
 
-//like button
-// const handleLike = () => {
-//   setLike(isLiked ? like -1 : like +1);
-//   setIsLiked(!isLiked);
-// };
+//like function
+const handleLike = async () => {
+  try{
+      await axios.put(`/posts/${post._id}/like`, {userId: currentUser._id }); //posts.jsの4
+  } catch(err){
+      console.log(err);
+  }
+  setLike(isLiked ? like -1 : like +1);
+  setIsLiked(!isLiked);
+};
 
 
   return (
@@ -56,7 +65,10 @@ useEffect(() => {
           <div className='postUser'>
               <Link to={`/profile/${user.username}`} >
                 <img
-                src={ user.profilePicture || PUBLIC_FOLDER + "/assets/person/noAvatar.png"}
+                src={
+                  user.profilePicture
+                  ? user.profilePicture
+                  : PUBLIC_FOLDER + "/assets/person/noAvatar.png"}
                 alt=''
                 className='postProfileImg'
                 />
@@ -80,9 +92,9 @@ useEffect(() => {
             className="likeIcon"
             src={PUBLIC_FOLDER + "/assets/heart.png"}
             alt=""
-            // onClick={() => handleLike()}
+            onClick={() => handleLike()}
             />
-            <span className="postLikeCounter">4 people like it</span>
+            <span className="postLikeCounter"> {like} people like it</span>
           </div>
         </Card>
       </Col>

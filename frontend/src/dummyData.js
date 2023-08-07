@@ -31,7 +31,8 @@ export const Friends = [
   export const Posts = [
     {
       id: 1,
-      desc: "Love For All, Hatred For None.",
+      title: "title",
+      description: "Love For All, Hatred For None.",
       photo: "/assets/post/1.jpeg",
       date: "5 mins ago",
       userId: 1,
@@ -48,7 +49,7 @@ export const Friends = [
     },
     {
       id: 3,
-      desc: "Every moment is a fresh beginning.",
+      description: "Every moment is a fresh beginning.",
       photo: "/assets/post/3.jpeg",
       date: "1 hour ago",
       userId: 3,
@@ -81,7 +82,7 @@ export const Friends = [
     },
     {
       id: 7,
-      desc: "Never regret anything that made you smile.",
+      description: "Never regret anything that made you smile.",
       photo: "/assets/post/7.jpeg",
       date: "2 days ago",
       userId: 7,
@@ -98,7 +99,7 @@ export const Friends = [
     },
     {
       id: 9,
-      desc: "Change the world by being yourself.",
+      description: "Change the world by being yourself.",
       photo: "/assets/post/9.jpeg",
       date: "5 days ago",
       userId: 9,

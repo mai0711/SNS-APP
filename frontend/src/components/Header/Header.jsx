@@ -31,7 +31,7 @@ function Header() {
                     <Link className="headerLink" to="/profile"><PersonIcon /></Link>
                 </div>
                 <div className="headerIconItem">
-                    <Link className="headerLink" to="/post"><PostAddIcon /></Link>
+                    {/* <Link className="headerLink" to="/postpage"><PostAddIcon /></Link> */}
                 </div>
                 <div className="headerIconItem">
                     <Link className="headerLink" to="/favorite"><FavoriteBorderIcon /></Link>

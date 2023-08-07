@@ -11,6 +11,7 @@ export default function Post() {
 
     const { user } = useContext(AuthContext);
     const desc = useRef()
+    const title = useRef()
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -30,45 +31,43 @@ export default function Post() {
   return (
     <>
     <Header />
-    <div className='share'>
-        <div className="shareWArapper">
-            <div className="shareTop">
-                <img
-                src={PUBLIC_FOLDER + "/assets/person/noAvatar.png"}
-                alt=''
-                className='shareProfileImg'
-                />
-                <input
-                type='text'
-                className='shareInput'
-                placeholder='What are you doing now?'
-                ref={desc}
-                />
+    <div className="post">
+      <div className="post-container">
+        <div className="user-profile">
+          <div className="post-top">
+            <img
+            src={
+              user.profilePicture
+              ? user.profilePicture
+              : PUBLIC_FOLDER + "/assets/person/noAvatar.png"}
+              alt=""
+            />
+            <div className="profileName">
+              <h5>{user.username}</h5>
             </div>
-            <hr className="shareHr" />
-
-            <form className="shareButtons"  onSubmit={(e) => handleSubmit(e)}>
-            <div className="shareOptions">
-                <div className="shareOption">
-                    <Image className="shareIcon" htmlColor='blue'/>
-                    <span className="shareOptionText">Picture</span>
-                </div>
-            <div className="shareOption">
-                <Gif className="shareIcon" htmlColor='hotpink' />
-                <span className="shareOptionText">GIF</span>
-            </div>
-            <div className="shareOption">
-                <Face className="shareIcon" htmlColor='green'/>
-                <span className="shareOptionText">Feelings</span>
-            </div>
-            <div className="shareOption">
-                <Analytics className="shareIcon" htmlColor='red' />
-                <span className="shareOptionText">Vote</span>
-            </div>
-            </div>
-                <button className='shareButton' type='submit'>Post</button>
-            </form>
+          </div>
         </div>
+
+          <form className='post-form' onSubmit={(e) => handleSubmit(e)} >
+            <h3>Post</h3>
+              <input
+                  className='post-title'
+                  type='text'
+                  placeholder="Title"
+                  ref={title}
+              />
+              <textarea
+                  className='post-description'
+                  rows="5"
+                  cols="40"
+                  type='text'
+                  placeholder="Description"
+                  ref={desc}
+              />
+              <input type="file" className="post-file" name="picture" accept="image/jpeg, image/png"></input>
+            <button className="post-button" type='submit' >POST</button>
+          </form>
+      </div>
     </div>
     </>
   )

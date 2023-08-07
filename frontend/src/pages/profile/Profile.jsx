@@ -39,7 +39,7 @@ useEffect(() => {
         <div className="profile-first-container">
           <div className="profileTop">
             <img src={user.coverPicture || PUBLIC_FOLDER + "/assets/post/3.jpeg"} alt="" className="profileBackImg"/>
-            <img src={ user.profilePicture || PUBLIC_FOLDER + "/assets/person/noAvatar.png"} alt="" className="profileImg"/>
+            <img src={user.profilePicture || PUBLIC_FOLDER + "/assets/person/noAvatar.png"} alt="" className="profileImg"/>
           </div>
           <div className="profileName">
               <h2>{user.username}</h2>

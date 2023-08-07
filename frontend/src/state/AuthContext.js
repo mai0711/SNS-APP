@@ -11,7 +11,7 @@ const initialState = {
     email: "mai@gmail.com",
     password: "222222",
     desc: "student",
-    profilePicture: "/person/1.jpeg",
+    profilePicture: "https://assets.website-files.com/619e8d2e8bd4838a9340a810/647c106477f8934b266ba39c_profile-picture-og.webp",
     coverPicture: "",
     followers: [],
     followings:

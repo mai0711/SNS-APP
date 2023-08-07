@@ -5,7 +5,7 @@ import Home from "./pages/home/Home";
 import Profile from './pages/profile/Profile';
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
-// import PostPage from './pages/post/postPage';
+import Post from "./pages/post/Post";
 import { AuthContext } from './state/AuthContext';
 import Favorite from './pages/favorite/Favorite';
 
@@ -21,7 +21,7 @@ function App() {
           <Route path='/register' element={user ? <Navigate to="/profile/:username" /> : <Register />} />
           <Route path='/login' element={user ? <Navigate to={`/profile/${user.username}`} /> : <Login />} /> {/* ログインに成功したらホームにいく */}
           <Route path='/profile/:username' element={<Profile />} />
-          {/* <Route path='/postpage' element={<PostPage />} /> */}
+          <Route path='/post' element={<Post />} />
           <Route path='/favorite' element={<Favorite />} />
           {/* :usernameの部分はuseParamsを使ってとれる */}
         </Routes>

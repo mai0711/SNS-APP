@@ -23,7 +23,7 @@ function Article({ post }) {
 // post.userIdが変わるたびに以下が呼び出される
 useEffect(() => {
   const fetchUser = async() => {
-  const response = await axios.get(`/users?userId=${post.userId}`); //users.jsの４
+  const response = await axios.get(`/users?userId=${post.userId}`); //users.jsの4
   //user.jsのget. postはtimeline.jsxで受け取ったprops userIdはmodels/User.jsのuserId. post.userIdは投稿したユーザーのuserId
       console.log(response);
       setUser(response.data);
@@ -31,19 +31,6 @@ useEffect(() => {
   fetchUser();
 }, [post.userId]);
 
-
-
-//いいねの
-post.userIdが変わるたびに以下が呼び出される
-useEffect(() => {
-  const fetchUser = async() => {
-  const response = await axios.get(`/users?userId=${post.userId}`); //user情報をgetする
-  //user.jsのget. postはtimeline.jsxで受け取ったprops userIdはmodels/User.jsのuserId. post.userIdは投稿したユーザーのuserId
-      // console.log(response);
-      setUser(response.data);
-  };
-  fetchUser();
-}, [post.userId]);
 
 
 //like function
@@ -74,7 +61,8 @@ const handleLike = async () => {
                 />
               </Link>
                 <span className='postUsername'>{ user.username }</span>
-                {/* <span className="postData">{format(post.createdAt)}</span> */}
+                <br />
+                  <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <Card.Img
           variant="top"

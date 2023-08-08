@@ -1,5 +1,5 @@
 import "./Post.css"
-import React, { useContext, useRef } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { Image, Gif, Face, Analytics } from "@mui/icons-material";
 import { AuthContext } from "../../state/AuthContext"
 import axios from 'axios';
@@ -13,16 +13,32 @@ export default function Post() {
     const desc = useRef()
     const title = useRef()
 
+    const [file, setFile] = useState(null);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const newPost = {
           userId: user._id, //誰が投稿するか（今ログインしているユーザー）
-          description: desc.current.value, //inputで入力した文字
-        };
+          title: title.current.value, //inputで入力した文字
+          description: desc.current.value
+        }
+        //画像アップロード
+        // if(file){
+        //   const data = new FormData(); //make new data
+        //   const fileName = Date.now() + file.name;
+        //   data.append("file", file); //indicate file and name
+        //   data.append("name", fileName);
+        //   newPost.img = fileName; // add image inside new post
+        //   try{
+        //     await axios.post("/upload", data);
+        //   }catch(err){
+        //     console.log(err)
+        //   }
+        // }
         //api
         try {
           await axios.post("/posts", newPost); //post.jsの1
-          window.location.reload(); //投稿した後、自分でリロードしなくても良くなる
+          window.location.reload(); //reload automatically after posted
         } catch(err) {
             console.log(err);
         }
@@ -39,7 +55,7 @@ export default function Post() {
             src={
               user.profilePicture
               ? user.profilePicture
-              : PUBLIC_FOLDER + "/assets/person/noAvatar.png"}
+              : PUBLIC_FOLDER + "person/noAvatar.png"}
               alt=""
             />
             <div className="profileName">
@@ -64,7 +80,15 @@ export default function Post() {
                   placeholder="Description"
                   ref={desc}
               />
-              <input type="file" className="post-file" name="picture" accept="image/jpeg, image/png"></input>
+              <input
+              type="file"
+              className="post-file"
+              id='file'
+              name="picture"
+              accept='.png, .jpeg, .jpg'
+              // style={{display: "none"}}
+              // onChange={(e) => setFile(e.target.files[0])}
+              />
             <button className="post-button" type='submit' >POST</button>
           </form>
       </div>

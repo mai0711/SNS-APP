@@ -13,6 +13,12 @@ function Header() {
 
     const { user } = useContext(AuthContext);
 
+    //logout
+    const handleLogout = async () => {
+		localStorage.clear();
+		window.location.href = '/';
+	};
+
 
   return (
     <div className="headerContainer">
@@ -43,7 +49,7 @@ function Header() {
                     <Link className="headerLink" to={`/favorite/${user.username}`}><FavoriteBorderIcon /></Link>
                 </div>
                 <div className="headerIconItem">
-                    <Link className="headerLink" to="/"><LogoutIcon /></Link>
+                    <LogoutIcon href="/" onClick={handleLogout} />
                 </div>
             </div>
         </div>

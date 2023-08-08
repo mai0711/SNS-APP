@@ -55,7 +55,7 @@ const handleLike = async () => {
                 src={
                   user.profilePicture
                   ? user.profilePicture
-                  : PUBLIC_FOLDER + "/assets/person/noAvatar.png"}
+                  : PUBLIC_FOLDER + "person/noAvatar.png"}
                 alt=''
                 className='postProfileImg'
                 />
@@ -66,7 +66,7 @@ const handleLike = async () => {
           </div>
           <Card.Img
           variant="top"
-          src={post.img || PUBLIC_FOLDER + "/assets/person/noAvatar.png"}
+          src={post.img || PUBLIC_FOLDER + "person/noAvatar.png"}
           />
           <Card.Body>
             <Card.Title>{post.title}</Card.Title>
@@ -78,7 +78,7 @@ const handleLike = async () => {
           <div className="postBottomLeft">
             <img
             className="likeIcon"
-            src={PUBLIC_FOLDER + "/assets/heart.png"}
+            src={PUBLIC_FOLDER + "heart.png"}
             alt=""
             onClick={() => handleLike()}
             />

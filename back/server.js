@@ -5,18 +5,20 @@ const path = require("path")
 const userRoute = require("./routes/users")
 const authRoute = require("./routes/auth")
 const postRoute = require("./routes/posts")
+const uploadRoute = require("./routes/upload")
 const PORT = 8000
 
 require("dotenv").config()
 
-//画像のある場所までいくパス
-app.use("/images", express.static(path.join(__dirname, "public/images"))); //"/imagesの時public/imagesに行く"
+
+app.use("/images", express.static(path.join(__dirname, "public/images")));
 
 //middleware
 app.use(express.json())
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/posts", postRoute);
+app.use("/api/upload", uploadRoute);
 
 //connect to MongoDB
 mongoose.connect(process.env.MONGO_URL, {

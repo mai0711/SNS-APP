@@ -25,7 +25,6 @@ useEffect(() => {
   const fetchUser = async() => {
   const response = await axios.get(`/users?userId=${post.userId}`); //users.jsの4
   //user.jsのget. postはtimeline.jsxで受け取ったprops userIdはmodels/User.jsのuserId. post.userIdは投稿したユーザーのuserId
-      console.log(response);
       setUser(response.data);
   };
   fetchUser();
@@ -66,7 +65,7 @@ const handleLike = async () => {
           </div>
           <Card.Img
           variant="top"
-          src={post.img || PUBLIC_FOLDER + "person/noAvatar.png"}
+          src={PUBLIC_FOLDER + post.img || PUBLIC_FOLDER + "person/noAvatar.png"}
           />
           <Card.Body>
             <Card.Title>{post.title}</Card.Title>

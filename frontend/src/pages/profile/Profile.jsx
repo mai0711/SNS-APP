@@ -26,7 +26,10 @@ export default function Profile() {
 useEffect(() => {
   const fetchPosts = async() => {
     const response = await axios.get(`/posts/timeline/${user._id}`) //post.jsの9.
-    setPosts(response.data);
+    // setPosts(response.data);
+    setPosts(response.data.sort((post1,post2) => { //sort post
+      return new Date(post2.createdAt) - new Date(post1.createdAt);
+    }));
   };
   fetchPosts();
 }, [username]);
@@ -38,8 +41,8 @@ useEffect(() => {
       <div className="profile">
         <div className="profile-first-container">
           <div className="profileTop">
-            <img src={user.coverPicture || PUBLIC_FOLDER + "/assets/post/3.jpeg"} alt="" className="profileBackImg"/>
-            <img src={user.profilePicture || PUBLIC_FOLDER + "/assets/person/noAvatar.png"} alt="" className="profileImg"/>
+            <img src={user.coverPicture || PUBLIC_FOLDER + "post/3.jpeg"} alt="" className="profileBackImg"/>
+            <img src={user.profilePicture || PUBLIC_FOLDER + "person/noAvatar.png"} alt="" className="profileImg"/>
           </div>
           <div className="profileName">
               <h2>{user.username}</h2>

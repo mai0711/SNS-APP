@@ -101,7 +101,7 @@ router.get("/api/v1/allMyPosts", async(req, res) =>{
 //8.get all of my posts(profile page)
 router.get("/profile/:username", async (req, res) => {
     try{
-        const user = await User.findOne({ username:req.params.username }); //1つのユーザー名から探すのでfindOne. findOneはプロパティが必要なのでusername:で指定
+        const user = await User.findOne({ username:req.params.username });
         const posts = await Post.find({ userId: user._id });
         return res.status(200).json(posts);
     }catch(err){

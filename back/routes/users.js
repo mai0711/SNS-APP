@@ -47,14 +47,14 @@ router.delete("/:id", async (req, res) => {
 
 
 
-//4.クエリでユーザー情報を取得
+//4.get a user data from query
 router.get("/", async(req, res) => {
-    const userId = req.query.userId; //queryはurlを打ち込んだときの?以降の部分
+    const userId = req.query.userId;
     const username = req.query.username;
     try{
         const user = userId
-        ? await User.findById(userId) // userIdが存在するならば、userIdと適合するものを探す
-        : await User.findOne({ username: username }); //userIdが存在しないならusernameと適合するものを探す
+        ? await User.findById(userId)
+        : await User.findOne({ username: username });
         const { password, updatedAt, ...other } = user._doc;  //get a user information except for password and updatedAt
         return res.status(200).json(other);
     }catch(err){

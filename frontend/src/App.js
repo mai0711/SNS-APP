@@ -11,19 +11,18 @@ import { AuthContext } from './state/AuthContext';
 
 function App() {
 
-  const { user } = useContext(AuthContext); // userの状態が変わっても取って来られる
+  const { user } = useContext(AuthContext);
 
   return (
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Home />} />{/* userがなければ新規登録 */}
+          <Route path='/' element={<Home />} />
           <Route path='/register' element={user ? <Navigate to="/profile/:username" /> : <Register />} />
-          <Route path='/login' element={user ? <Navigate to={`/profile/${user.username}`} /> : <Login />} /> {/* ログインに成功したらホームにいく */}
+          <Route path='/login' element={user ? <Navigate to={`/profile/${user.username}`} /> : <Login />} /> {/* After logged in, go to profile page */}
           <Route path='/profile/:username' element={<Profile />} />
           <Route path='/post' element={<Post />} />
           <Route path='/favorite/:username' element={<Favorite />} />
-          {/* :usernameの部分はuseParamsを使ってとれる */}
         </Routes>
       </BrowserRouter>
     </div>

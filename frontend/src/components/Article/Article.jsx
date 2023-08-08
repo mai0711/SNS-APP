@@ -11,21 +11,19 @@ function Article({ post }) {
 
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  const { user: currentUser } = useContext(AuthContext); //ログインしているユーザー
+  const { user: currentUser } = useContext(AuthContext); //current user
 
-  const [user, setUser] = useState({}); //投稿したユーザーのデータ
+  const [user, setUser] = useState({}); //the data of user who posted the article
   const [ like, setLike ] = useState(post.likes.length);
   const [ isLiked, setIsLiked ] = useState(false);
 
 
 
-//postを表示するため 投稿した人のuserデータをとる
-// post.userIdが変わるたびに以下が呼び出される
+//get a user data to show the post (user who posted the article)
 useEffect(() => {
   const fetchUser = async() => {
-  const response = await axios.get(`/users?userId=${post.userId}`); //users.jsの4
-  //user.jsのget. postはtimeline.jsxで受け取ったprops userIdはmodels/User.jsのuserId. post.userIdは投稿したユーザーのuserId
-      console.log(response);
+  const response = await axios.get(`/users?userId=${post.userId}`); //users.js 4
+  //post is props from timeline.jsx / userId is coming from models/User.js / post.userId = userId(user who posted the article)
       setUser(response.data);
   };
   fetchUser();
@@ -36,7 +34,7 @@ useEffect(() => {
 //like function
 const handleLike = async () => {
   try{
-      await axios.put(`/posts/${post._id}/like`, {userId: currentUser._id }); //posts.jsの4
+      await axios.put(`/posts/${post._id}/like`, {userId: currentUser._id }); //posts.js 4
   } catch(err){
       console.log(err);
   }
@@ -66,7 +64,7 @@ const handleLike = async () => {
           </div>
           <Card.Img
           variant="top"
-          src={post.img || PUBLIC_FOLDER + "person/noAvatar.png"}
+          src={PUBLIC_FOLDER + post.img || PUBLIC_FOLDER + "person/noAvatar.png"}
           />
           <Card.Body>
             <Card.Title>{post.title}</Card.Title>

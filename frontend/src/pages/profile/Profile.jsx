@@ -15,24 +15,22 @@ export default function Profile() {
 
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  const { user } = useContext(AuthContext); //user is from AuthContext.js, ログインしているユーザーのデータ
+  const { user } = useContext(AuthContext); //user is from AuthContext.js, current user's data
 
   const [posts, setPosts] = useState([]);
   const username = useParams().username;
 
 
-//postを表示するため（自分の投稿とフォローしている人の投稿）
-// usernameが変わるたびに発火
+//to show post（my post and following people's post）
 useEffect(() => {
   const fetchPosts = async() => {
-    const response = await axios.get(`/posts/timeline/${user._id}`) //post.jsの9.
-    // setPosts(response.data);
+    const response = await axios.get(`/posts/timeline/${user._id}`) //post.js 9.
     setPosts(response.data.sort((post1,post2) => { //sort post
       return new Date(post2.createdAt) - new Date(post1.createdAt);
     }));
   };
   fetchPosts();
-}, [username]);
+}, [user._id]);
 
 
   return (

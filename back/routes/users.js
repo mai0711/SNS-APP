@@ -46,7 +46,6 @@ router.delete("/:id", async (req, res) => {
 });
 
 
-
 //4.get a user data from query
 router.get("/", async(req, res) => {
     const userId = req.query.userId;
@@ -103,6 +102,27 @@ router.put("/:id/unfollow", async (req, res) => { // :id = params.id
         }
     }else{ // req.body.userId ==== req.params.id = my id
         return res.status(403).json("You can't unfollow yourself")
+    }
+})
+
+//7.get friends
+router.get("/friends/:userId", async(req,res) => {
+    try{
+        const user = await User.findById(req.params.userId);
+        const friends = await Promise.all(
+            user.followings.map((friendId) => {
+                return User.findById(friendId);
+            })
+        );
+        let friendList = [];
+        friends.map((friend) => {
+            const { _id, username, profilePicture } = friend;
+            friendList.push({ _id, username, profilePicture });
+        });
+        res.status(200).json(friendList)
+        console.log(friendList)
+    }catch(err){
+        res.status(500).json(err)
     }
 })
 

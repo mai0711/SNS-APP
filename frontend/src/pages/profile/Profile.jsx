@@ -4,11 +4,9 @@ import "./Profile.css";
 import Row from 'react-bootstrap/Row';
 import Header from '../../components/Header/Header'
 import axios from "axios";
-import { useParams } from "react-router-dom"
-import { Friends } from '../../dummyData'
-import Friend from '../../components/Friend/Friend'
 import { AuthContext } from '../../state/AuthContext';
 import Article from '../../components/Article/Article';
+import { Link } from "react-router-dom";
 
 
 export default function Profile() {
@@ -18,13 +16,12 @@ export default function Profile() {
   const { user } = useContext(AuthContext); //user is from AuthContext.js, current user's data
 
   const [posts, setPosts] = useState([]);
-  const username = useParams().username;
-
+  const [friends, setFriends] = useState([]);
 
 //to show post（my post and following people's post）
 useEffect(() => {
   const fetchPosts = async() => {
-    const response = await axios.get(`/posts/timeline/${user._id}`) //post.js 9.
+    const response = await axios.get(`/posts/article/${user._id}`) //post.js 7.
     setPosts(response.data.sort((post1,post2) => { //sort post
       return new Date(post2.createdAt) - new Date(post1.createdAt);
     }));
@@ -32,6 +29,19 @@ useEffect(() => {
   fetchPosts();
 }, [user._id]);
 
+
+//to show friends
+useEffect(() => {
+  const getFriends = async() => {
+    try{
+      const friendList = await axios.get("/users/friends/" + user._id); //users.js 7
+      setFriends(friendList.data);
+    }catch(err){
+      console.log(err);
+    }
+  };
+  getFriends();
+}, [user._id]);
 
   return (
     <>
@@ -62,8 +72,20 @@ useEffect(() => {
 
               <div>
                 <ul className="friendsList">
-                  {Friends.map((friend) => (
-                    <Friend friend={friend} key={friend.id} />
+                  {friends.map((friend) => (
+                    <li className="friendList">
+                        <Link to= {`/friends/${friend.username}`}>
+                            <img
+                            src={
+                            friend.profilePicture
+                            ? friend.profilePicture
+                            : PUBLIC_FOLDER + "person/noAvatar.png" }
+                            alt=''
+                            className='friendProfileImg'
+                            />
+                        </Link>
+                        <span className="friendUsername">{friend.username}</span>
+                    </li>
                   ))}
                 </ul>
               </div>

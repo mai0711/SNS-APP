@@ -1,6 +1,22 @@
+.favorite-container {
+    min-height: 100vh;
+    min-width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    background-color:  #DEE4DA;
+    background-image: url(../../../public/assets/leaves-bottom.png), url(../../../public/assets/leaves-top.png);
+    background-repeat: no-repeat, no-repeat;
+    background-repeat: no-repeat, no-repeat;
+    background-position: right bottom, left top;
+    background-size: 40% auto, 40% auto;
+}
+
 .userProfile {
     margin-bottom: 20px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }

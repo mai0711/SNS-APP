@@ -71,47 +71,19 @@ router.get("/:id", async (req, res) => { //id = post id
     }
 })
 
-//6.get all posts
-router.get("/api/v1/allPosts", async(req, res) =>{
+//6.get all of posts in friends's profile page
+router.get("/friends/:userId", async (req, res) => {
     try{
-        const allPosts = await Post.find({});
-        res.status(200).json(allPosts);
-    } catch(err) {
-        res.status(500).json(err);
-    }
-})
-
-//7.get only all of my posts
-router.get("/api/v1/allMyPosts", async(req, res) =>{
-    try{
-        //get all posts
-        const allPosts = await Post.find({});
-        //get only my posts
-        const myPosts = await Promise.all(
-            allPosts.filter((allMyPost) => {
-                return allMyPost.userId == req.body.userId
-            })
-            );
-            return res.status(200).json(myPosts);
-    } catch(err) {
-        return res.status(500).json(err);
-    }
-})
-
-//8.get all of my posts(profile page)
-router.get("/profile/:username", async (req, res) => {
-    try{
-        const user = await User.findOne({ username:req.params.username });
-        const posts = await Post.find({ userId: user._id });
+        const friend = await User.findById(req.params.userId);
+        const posts = await Post.find({ userId: friend._id });
         return res.status(200).json(posts);
     }catch(err){
         return res.status(500).json(err);
     }
 })
 
-//9.get all of following people's posts and my posts
-router.get("/timeline/:userId", async (req, res) => {
-// router.get("/profile/:userId", async (req, res) => {
+//7.get all of following people's posts and my posts
+router.get("/article/:userId", async (req, res) => {
     try{
         const currentUser = await User.findById(req.params.userId);
         const userPosts = await Post.find({ userId: currentUser._id });
@@ -126,6 +98,30 @@ router.get("/timeline/:userId", async (req, res) => {
         return res.status(500).json(err);
     }
 })
+
+
+
+
+//8.get all of favorite posts
+// router.get("/favorite/:userId", async (req, res) => {
+//     try{
+//         const currentUser = await User.findById(req.params.userId);
+//         const userPosts = await Post.find({ userId: currentUser._id });
+//         //get all of the friend's posts
+//         const friendPosts = await Promise.all(
+//             currentUser.followings.map(friendId => {
+//             return Post.find({ userId: friendId });
+//             })
+//         );
+//         const Articles = res.json(userPosts.concat(...friendPosts));  // combine my posts and friend's posts
+//         Articles.likes.filter((like)=>{
+//         return like == currentUser._id
+//         })
+//     }catch(err){
+//         return res.status(500).json(err);
+//     }
+// })
+
 
 
 module.exports = router;

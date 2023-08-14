@@ -13,10 +13,9 @@ function Article({ post }) {
 
   const { user: currentUser } = useContext(AuthContext); //current user
 
-  const [user, setUser] = useState({}); //the data of user who posted the article
+  const [ user, setUser ] = useState({}); //the data of user who posted the article
   const [ like, setLike ] = useState(post.likes.length);
   const [ isLiked, setIsLiked ] = useState(false);
-
 
 
 //get a user data to show the post (user who posted the article)

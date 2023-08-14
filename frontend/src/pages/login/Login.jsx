@@ -9,7 +9,7 @@ export default function Login() {
 
     const email = useRef(); //to refer input value in form
     const password = useRef();
-    const { user, isFetching, error, dispatch } = useContext(AuthContext); // to use value in AuthContext.js
+    const { user, dispatch } = useContext(AuthContext); // to use value in AuthContext.js
 
     const handleSubmit = (e) => {
         e.preventDefault();

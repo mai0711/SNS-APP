@@ -7,6 +7,7 @@ import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import Post from "./pages/post/Post";
 import Favorite from './pages/favorite/Favorite';
+import Friends from './pages/friends/Friends';
 import { AuthContext } from './state/AuthContext';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path='/register' element={user ? <Navigate to="/profile/:username" /> : <Register />} />
           <Route path='/login' element={user ? <Navigate to={`/profile/${user.username}`} /> : <Login />} /> {/* After logged in, go to profile page */}
           <Route path='/profile/:username' element={<Profile />} />
+          <Route path='/friends/:username' element={<Friends />} />
           <Route path='/post' element={<Post />} />
           <Route path='/favorite/:username' element={<Favorite />} />
         </Routes>

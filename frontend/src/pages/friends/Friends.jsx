@@ -84,7 +84,7 @@ return (
             <div>
                 <ul className="friendsList">
                     {friends.map((friend) => (
-                        <li className="friendList">
+                        <li className="friendList" key={friend.username}>
                         <Link to= {`/friends/${friend.username}`}>
                             <img
                             src={

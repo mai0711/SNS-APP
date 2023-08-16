@@ -84,7 +84,7 @@ useEffect(() => {
                             className='friendProfileImg'
                             />
                         </Link>
-                        <span className="friendUsername">{friend.username}</span>
+                        <h6 className="friendUsername">{friend.username}</h6>
                     </li>
                   ))}
                 </ul>

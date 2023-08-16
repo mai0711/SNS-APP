@@ -7,7 +7,8 @@ const storage = multer.diskStorage({
         cb(null, "public/images"); //store posted image in "public/images"
     },
     filename: (req, file, cb)=> {  //file name
-        cb(null, req.body.name ); //req.body.name = fileName in Share.jsx
+        cb(null, req.body.name ); //req.body.name = fileName in Post.jsx
+        //cb(null, file.originalname); //this is for checking in postman
     },
 });
 

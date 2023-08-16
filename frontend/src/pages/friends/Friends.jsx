@@ -17,6 +17,7 @@ export default function Profile() {
     const [user, setUser] = useState({});
     const [friends, setFriends] = useState([]);
 
+
     const username = useParams().username;
 
     //to get a user data

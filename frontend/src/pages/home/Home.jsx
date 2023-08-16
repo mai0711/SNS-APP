@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom'
 
 function Home() {
 
+  const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
+
+
   return (
     <>
       <div className="first-container" id="link1">
@@ -12,7 +15,10 @@ function Home() {
             <div><Link className="login-button" to="/login">LOGIN</Link></div>
           </div>
         </div>
-        <h1 className="logo">Logo</h1>
+        <img
+            src={PUBLIC_FOLDER + "logo/logo.png"}
+            alt='logo'
+            className="homeLogo" />
       </div>
 
       <div className="second-container">

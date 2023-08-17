@@ -100,8 +100,6 @@ router.get("/article/:userId", async (req, res) => {
 })
 
 
-
-
 //8.get all of favorite posts
 // router.get("/favorite/:userId", async (req, res) => {
 //     try{
@@ -113,9 +111,9 @@ router.get("/article/:userId", async (req, res) => {
 //             return Post.find({ userId: friendId });
 //             })
 //         );
-//         const Articles = res.json(userPosts.concat(...friendPosts));  // combine my posts and friend's posts
-//         Articles.likes.filter((like)=>{
-//         return like == currentUser._id
+//         const allArticles = res.json(userPosts.concat(...friendPosts));  // combine my posts and friend's posts
+//         allArticles.likes.filter((like)=>{
+//         return like === currentUser._id
 //         })
 //     }catch(err){
 //         return res.status(500).json(err);

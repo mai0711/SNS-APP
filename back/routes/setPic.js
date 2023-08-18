@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const multer = require("multer")// to upload file
+const User = require("../models/User");
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {//destination = save location
@@ -13,9 +14,13 @@ const storage = multer.diskStorage({
 });
 
 //1, API for setting profile pic
-const setProfile =  multer({ storage: storage });
-router.post("/profilePic", setProfile.single("file"), (req, res) => { //file = key in postman
+const uploadPic =  multer({ storage: storage });
+router.put("/profilePic/:userId", uploadPic.single("file"), async (req, res) => {
     try{
+        const user = await User.findById(req.params.userId);
+        await user.updateOne({ $set: { profilePicture:req.file.filename }});
+        console.log(req.file)
+        await user.save();
         return res.status(200).json("Profile picture is set successfully");
     }catch(err){
         console.log(err)
@@ -23,9 +28,13 @@ router.post("/profilePic", setProfile.single("file"), (req, res) => { //file = k
 })
 
 //2, API for setting cover pic
-const setCover =  multer({ storage: storage });
-router.post("/coverPic", setCover.single("file"), (req, res) => { //file = key in postman
+const uploadCover =  multer({ storage: storage });
+router.put("/coverPic/:userId", uploadCover.single("file"), async (req, res) => {
     try{
+        const user = await User.findById(req.params.userId);
+        await user.updateOne({ $set: { coverPicture:req.file.filename }});
+        console.log(req.file)
+        await user.save();
         return res.status(200).json("Cover picture is set successfully");
     }catch(err){
         console.log(err)

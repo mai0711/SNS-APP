@@ -4,7 +4,8 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { format } from "timeago.js";
+// import TimeAgo from 'timeago-react';
+import { format } from 'timeago.js';
 import { AuthContext } from "../../state/AuthContext"
 
 function Article({ post }) {

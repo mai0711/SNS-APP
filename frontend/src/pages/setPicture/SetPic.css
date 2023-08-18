@@ -26,9 +26,9 @@
 }
 
 .setting-form {
-    width: 500px;
-    height: 400px;
-    padding: 20px;
+    width: 400px;
+    height: 200px;
+    margin: 20px;
     border: 1px solid #ccc;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
@@ -37,22 +37,6 @@
     justify-content: center;
     align-items: center;
     background-color: #bfcdbb;
-}
-
-h4 {
-    color: #E1E6E0;
-}
-
-.setting-form input {
-
-}
-
-.setProfilePic {
-    padding-bottom: 50px;
-}
-
-.setCoverPic {
-    padding-bottom: 50px;
 }
 
 .setting-button {

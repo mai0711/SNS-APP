@@ -23,7 +23,7 @@ useEffect(() => {
   const fetchUser = async() => {
   const response = await axios.get(`/users?userId=${post.userId}`); //users.js 4
   //post is props from timeline.jsx / userId is coming from models/User.js / post.userId = userId(user who posted the article)
-      setUser(response.data);
+    setUser(response.data);
   };
   fetchUser();
 }, [post.userId]);

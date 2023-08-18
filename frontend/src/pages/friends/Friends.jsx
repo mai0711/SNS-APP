@@ -95,7 +95,7 @@ return (
                             <img
                             src={
                             friend.profilePicture
-                            ? friend.profilePicture
+                            ? PUBLIC_FOLDER + friend.profilePicture
                             : PUBLIC_FOLDER + "person/noAvatar.png" }
                             alt=''
                             className='friendProfileImg'

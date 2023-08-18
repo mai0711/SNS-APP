@@ -30,6 +30,7 @@ export default function Favorite() {
     <>
         <Header />
         <div className="favorite-container">
+        <h1>Favorite Articles</h1>
             <div className="userProfile">
                 <img
                 src={
@@ -43,7 +44,6 @@ export default function Favorite() {
                 </div>
             </div>
             <div className="favoriteArticles">
-                <h1>Favorite Articles</h1>
                 <Row xs={2} md={4} className="g-6">
                     {favoritePosts.map((favoritePost) => (
                         <Article  post={favoritePost} key={favoritePost._id} />

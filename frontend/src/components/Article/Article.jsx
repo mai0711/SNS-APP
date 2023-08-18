@@ -45,7 +45,7 @@ const handleLike = async () => {
   return (
     <>
       <Col>
-        <Card className='card'>
+        <Card className='card' style={{height: '30rem', marginBottom:'3rem'}}>
           <div className='postUser'>
               <Link to={`/profile/${user.username}`} >
                 <img
@@ -63,16 +63,15 @@ const handleLike = async () => {
           </div>
           <Card.Img
           variant="top"
+          style={{ height: '15rem' }}
           src={PUBLIC_FOLDER + post.img || PUBLIC_FOLDER + "person/noAvatar.png"}
           />
-          <Card.Body>
+          <Card.Body style={{ height: '10rem' }}>
             <Card.Title>{post.title}</Card.Title>
             <Card.Text>
               {post.description}
             </Card.Text>
-          </Card.Body>
-
-          <div className="postBottomLeft">
+            <div className="postBottomLeft">
             <img
             className="likeIcon"
             src={PUBLIC_FOLDER + "heart.png"}
@@ -81,6 +80,7 @@ const handleLike = async () => {
             />
             <span className="postLikeCounter"> {like} people like it</span>
           </div>
+          </Card.Body>
         </Card>
       </Col>
     </>

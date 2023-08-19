@@ -22,16 +22,16 @@ function Article({ post }) {
   const [editedDescription, setEditedDescription] = useState(post.description);
   const [editedFile, setEditedFile] = useState(null);
 
-  // Función para alternar el modo de edición
+  // Function to toggle editing mode
   const toggleEdit = () => {
     setEditing(!editing);
   };
 
-  // Función para eliminar una publicación
+  // Function to delete a publication
   const handleDelete = async () => {
     try {
       await axios.delete(`/api/posts/${post._id}`, { data: { userId: currentUser._id } });
-      // Es posible que desees eliminar la publicación eliminada del estado 'posts' aquí
+      //You may want to remove the deleted post from the 'posts' status here
     } catch (err) {
       console.log(err);
     }
@@ -39,32 +39,32 @@ function Article({ post }) {
 
   const handleUpdate = async () => {
     try {
-      // Datos a enviar al servidor
+      // Data to be sent to the server
       const updatedData = {
         title: editedTitle,
         description: editedDescription,
       };
   
-      // Si se seleccionó una nueva imagen
+      // If a new image was selected
       if (editedFile) {
         const formData = new FormData();
         formData.append("file", editedFile);
-        // Realizar la carga de la imagen al servidor y obtener el nombre de archivo
+        // Upload the image to the server and get the file name
         const response = await axios.post("/upload", formData);
         updatedData.img = response.data.fileName;
       }
   
-      // Enviar los datos actualizados al servidor
-      await axios.put(`http://localhost:8000/api/posts/${post._id}`, updatedData);
+      // Send updated data to the server
+      await axios.put(`/api/posts/${post._id}`, updatedData);
   
-      // Actualizar los datos en el componente
+      // Maintain data in the component
       post.title = editedTitle;
       post.description = editedDescription;
       if (updatedData.img) {
         post.img = updatedData.img;
       }
   
-      setEditing(false); // Salir del modo de edición
+      setEditing(false); // Exit edit mode
     } catch (err) {
       console.log(err);
     }
@@ -133,7 +133,7 @@ const handleLike = async () => {
             onClick={() => handleLike()}
             />
             <span className="postLikeCounter"> {like} people like it</span>
-            {/* Botones de Editar y Eliminar */}
+            {/* Edit and Delete buttons */}
             {currentUser._id === post.userId && (
               <>
                 <button onClick={toggleEdit}>Edit</button>
@@ -142,7 +142,7 @@ const handleLike = async () => {
             )}
           </div>
 
-          {/* Renderizar el formulario de edición si está en modo de edición */}
+          {/* Render the edit form if it is in edit mode */}
           {editing && (
             <div className="editForm">
               <input

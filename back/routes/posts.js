@@ -18,7 +18,9 @@ router.post("/", async (req, res) => {
 router.put("/:id", async(req, res) => { //id = post id
     try{
         const post = await Post.findById(req.params.id);
-        if(post.userId === req.body.userId){
+        console.log(post)
+        console.log(req.params)
+        if(post.userId === req.params.id){
             await post.updateOne( {$set: req.body} );
             return res.status(200).json("The post has been updated")
         }else{

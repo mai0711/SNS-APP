@@ -18,6 +18,59 @@ function Article({ post }) {
   const [ like, setLike ] = useState(post.likes.length);
   const [ isLiked, setIsLiked ] = useState(false);
 
+  const [editing, setEditing] = useState(false);
+  const [editedTitle, setEditedTitle] = useState(post.title);
+  const [editedDescription, setEditedDescription] = useState(post.description);
+  const [editedFile, setEditedFile] = useState(null);
+
+  // Function to toggle editing mode
+  const toggleEdit = () => {
+    setEditing(!editing);
+  };
+
+  // Function to delete a publication
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`/api/posts/${post._id}`, { data: { userId: currentUser._id } });
+      //You may want to remove the deleted post from the 'posts' status here
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleUpdate = async () => {
+    try {
+      // Data to be sent to the server
+      const updatedData = {
+        title: editedTitle,
+        description: editedDescription,
+      };
+  
+      // If a new image was selected
+      if (editedFile) {
+        const formData = new FormData();
+        formData.append("file", editedFile);
+        // Upload the image to the server and get the file name
+        const response = await axios.post("/upload", formData);
+        updatedData.img = response.data.fileName;
+      }
+  
+      // Send updated data to the server
+      await axios.put(`/api/posts/${post._id}`, updatedData);
+  
+      // Maintain data in the component
+      post.title = editedTitle;
+      post.description = editedDescription;
+      if (updatedData.img) {
+        post.img = updatedData.img;
+      }
+  
+      setEditing(false); // Exit edit mode
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  
 
 //get a user data to show the post (user who posted the article)
 useEffect(() => {
@@ -80,8 +133,37 @@ const handleLike = async () => {
             onClick={() => handleLike()}
             />
             <span className="postLikeCounter"> {like} people like it</span>
+            {/* Edit and Delete buttons */}
+            {currentUser._id === post.userId && (
+              <>
+                <button onClick={toggleEdit}>Edit</button>
+                <button onClick={handleDelete}>Delete</button>
+              </>
+            )}
           </div>
+
+
+          {/* Renderizar el formulario de edición si está en modo de edición */}
+          {editing && (
+            <div className="editForm">
+              <input
+                type="text"
+                value={editedTitle}
+                onChange={(e) => setEditedTitle(e.target.value)}
+              />
+              <textarea
+                rows="5"
+                cols="40"
+                value={editedDescription}
+                onChange={(e) => setEditedDescription(e.target.value)}
+              />
+              <button onClick={handleUpdate}>Save changes</button>
+            </div>
+          )}
+
+
           </Card.Body>
+
         </Card>
       </Col>
     </>

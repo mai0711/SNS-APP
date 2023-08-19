@@ -31,7 +31,11 @@ function Article({ post }) {
   // Function to delete a publication
   const handleDelete = async () => {
     try {
+<<<<<<< HEAD
       await axios.delete(`/posts/${post._id}`, { data: { userId: currentUser._id } });
+=======
+      await axios.delete(`/api/posts/${post._id}`, { data: { userId: currentUser._id } });
+>>>>>>> origin
       //You may want to remove the deleted post from the 'posts' status here
     } catch (err) {
       console.log(err);
@@ -54,17 +58,28 @@ function Article({ post }) {
         const response = await axios.post("/upload", formData);
         updatedData.img = response.data.fileName;
       }
+<<<<<<< HEAD
 
       // Send updated data to the server
       await axios.put(`/posts/${post._id}`, updatedData);
 
+=======
+  
+      // Send updated data to the server
+      await axios.put(`/api/posts/${post._id}`, updatedData);
+  
+>>>>>>> origin
       // Maintain data in the component
       post.title = editedTitle;
       post.description = editedDescription;
       if (updatedData.img) {
         post.img = updatedData.img;
       }
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> origin
       setEditing(false); // Exit edit mode
     } catch (err) {
       console.log(err);

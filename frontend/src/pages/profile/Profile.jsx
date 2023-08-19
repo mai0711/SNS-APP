@@ -20,12 +20,18 @@ export default function Profile() {
 
 //to show post（my post and following people's post）
 useEffect(() => {
-  const fetchPosts = async() => {
-    const response = await axios.get(`/posts/article/${user._id}`) //post.js 7.
-    setPosts(response.data.sort((post1,post2) => { //sort post
-      return new Date(post2.createdAt) - new Date(post1.createdAt);
-    }));
+  const fetchPosts = async () => {
+    try {
+      const response = await axios.get(`api/posts/article/${user._id}`);
+      setPosts(response.data.sort((post1, post2) => {
+        return new Date(post2.createdAt) - new Date(post1.createdAt);
+      }));
+    } catch (err) {
+      console.log(err);
+    }
   };
+
+
   fetchPosts();
 }, [user._id]);
 

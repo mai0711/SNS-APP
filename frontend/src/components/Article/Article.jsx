@@ -17,6 +17,59 @@ function Article({ post }) {
   const [ like, setLike ] = useState(post.likes.length);
   const [ isLiked, setIsLiked ] = useState(false);
 
+  const [editing, setEditing] = useState(false);
+  const [editedTitle, setEditedTitle] = useState(post.title);
+  const [editedDescription, setEditedDescription] = useState(post.description);
+  const [editedFile, setEditedFile] = useState(null);
+
+  // Función para alternar el modo de edición
+  const toggleEdit = () => {
+    setEditing(!editing);
+  };
+
+  // Función para eliminar una publicación
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`/api/posts/${post._id}`, { data: { userId: currentUser._id } });
+      // Es posible que desees eliminar la publicación eliminada del estado 'posts' aquí
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleUpdate = async () => {
+    try {
+      // Datos a enviar al servidor
+      const updatedData = {
+        title: editedTitle,
+        description: editedDescription,
+      };
+  
+      // Si se seleccionó una nueva imagen
+      if (editedFile) {
+        const formData = new FormData();
+        formData.append("file", editedFile);
+        // Realizar la carga de la imagen al servidor y obtener el nombre de archivo
+        const response = await axios.post("/upload", formData);
+        updatedData.img = response.data.fileName;
+      }
+  
+      // Enviar los datos actualizados al servidor
+      await axios.put(`http://localhost:8000/api/posts/${post._id}`, updatedData);
+  
+      // Actualizar los datos en el componente
+      post.title = editedTitle;
+      post.description = editedDescription;
+      if (updatedData.img) {
+        post.img = updatedData.img;
+      }
+  
+      setEditing(false); // Salir del modo de edición
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  
 
 //get a user data to show the post (user who posted the article)
 useEffect(() => {
@@ -80,7 +133,33 @@ const handleLike = async () => {
             onClick={() => handleLike()}
             />
             <span className="postLikeCounter"> {like} people like it</span>
+            {/* Botones de Editar y Eliminar */}
+            {currentUser._id === post.userId && (
+              <>
+                <button onClick={toggleEdit}>Edit</button>
+                <button onClick={handleDelete}>Delete</button>
+              </>
+            )}
           </div>
+
+          {/* Renderizar el formulario de edición si está en modo de edición */}
+          {editing && (
+            <div className="editForm">
+              <input
+                type="text"
+                value={editedTitle}
+                onChange={(e) => setEditedTitle(e.target.value)}
+              />
+              <textarea
+                rows="5"
+                cols="40"
+                value={editedDescription}
+                onChange={(e) => setEditedDescription(e.target.value)}
+              />
+              <button onClick={handleUpdate}>Save changes</button>
+            </div>
+          )}
+
         </Card>
       </Col>
     </>

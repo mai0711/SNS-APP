@@ -4,7 +4,8 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { format } from "timeago.js";
+// import TimeAgo from 'timeago-react';
+import { format } from 'timeago.js';
 import { AuthContext } from "../../state/AuthContext"
 
 function Article({ post }) {
@@ -76,7 +77,7 @@ useEffect(() => {
   const fetchUser = async() => {
   const response = await axios.get(`/users?userId=${post.userId}`); //users.js 4
   //post is props from timeline.jsx / userId is coming from models/User.js / post.userId = userId(user who posted the article)
-      setUser(response.data);
+    setUser(response.data);
   };
   fetchUser();
 }, [post.userId]);
@@ -98,7 +99,7 @@ const handleLike = async () => {
   return (
     <>
       <Col>
-        <Card className='card'>
+        <Card className='card' style={{height: '30rem', marginBottom:'3rem'}}>
           <div className='postUser'>
               <Link to={`/profile/${user.username}`} >
                 <img
@@ -116,16 +117,15 @@ const handleLike = async () => {
           </div>
           <Card.Img
           variant="top"
+          style={{ height: '15rem' }}
           src={PUBLIC_FOLDER + post.img || PUBLIC_FOLDER + "person/noAvatar.png"}
           />
-          <Card.Body>
+          <Card.Body style={{ height: '10rem' }}>
             <Card.Title>{post.title}</Card.Title>
             <Card.Text>
               {post.description}
             </Card.Text>
-          </Card.Body>
-
-          <div className="postBottomLeft">
+            <div className="postBottomLeft">
             <img
             className="likeIcon"
             src={PUBLIC_FOLDER + "heart.png"}
@@ -142,7 +142,8 @@ const handleLike = async () => {
             )}
           </div>
 
-          {/* Render the edit form if it is in edit mode */}
+
+          {/* Renderizar el formulario de edición si está en modo de edición */}
           {editing && (
             <div className="editForm">
               <input
@@ -159,6 +160,9 @@ const handleLike = async () => {
               <button onClick={handleUpdate}>Save changes</button>
             </div>
           )}
+
+
+          </Card.Body>
 
         </Card>
       </Col>

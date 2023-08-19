@@ -8,10 +8,12 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import { AuthContext } from '../../state/AuthContext';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 function Header() {
 
     const { user } = useContext(AuthContext);
+    const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
 
     //logout
     const handleLogout = async () => {
@@ -23,7 +25,10 @@ function Header() {
   return (
     <div className="headerContainer">
         <div className="headerLeft">
-            <span className="logo">LOGO</span>
+            <img
+            src={PUBLIC_FOLDER + "logo/logo4.png"}
+            alt='logo'
+            className="logo" />
         </div>
         <div className="headerCenter">
             <div className="searchBar">
@@ -38,6 +43,9 @@ function Header() {
             <div className="headerIcons">
                 <div className="headerIconItem">
                     <Link className="headerLink" to="/"><HomeIcon /></Link>
+                </div>
+                <div className="headerIconItem">
+                    <Link className="headerLink" to={`/setPic/${user.username}`}><SettingsIcon /></Link>
                 </div>
                 <div className="headerIconItem">
                     <Link className="headerLink" to={`/profile/${user.username}`}><PersonIcon /></Link>

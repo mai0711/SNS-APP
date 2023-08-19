@@ -14,11 +14,9 @@
 }
 
 .logo {
-    font-size: 24px;
-    margin-left: 20px;
-    font-weight: bold;
-    color: black;
-    cursor: pointer;
+    height: 90px;
+    width: 90px;
+    margin-left: 40px;
 }
 
 .headerCenter {

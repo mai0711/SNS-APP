@@ -5,12 +5,17 @@ body {
     margin: 0;
 }
 
+.homeLogo {
+    height: 300px;
+    width: 350px;
+}
+
 .first-container {
     background-color: #DEE4DA;
-    background-image: url(../../../public/assets/leaves-bottom.png), url(../../../public/assets/leaves-top.png);
+    /* background-image: url(../../../public/assets/leaves-bottom.png), url(../../../public/assets/leaves-top.png);
     background-repeat: no-repeat, no-repeat;
     background-position: right bottom, left top;
-    background-size: 40% auto, 40% auto;
+    background-size: 40% auto, 40% auto; */
     display: flex;
     flex-direction: column;
     align-items: center;

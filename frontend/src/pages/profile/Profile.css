@@ -72,6 +72,7 @@
     justify-content: space-evenly;
     list-style: none;
     text-align: center;
+    align-items: center;
 }
 
 .friendProfileImg {
@@ -81,7 +82,7 @@
 }
 
 .friendUsername {
-    font-weight: bold;
+    text-align: center;
 }
 
 .profile-second-container {

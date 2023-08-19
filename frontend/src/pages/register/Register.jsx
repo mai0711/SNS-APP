@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import "./Register.css";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+// import SetPic from '../setPicture/setPic';
 
 export default function Register() {
 
@@ -48,6 +49,7 @@ export default function Register() {
                     required
                     ref={username}
                     />
+
                     <input
                     className='register-input'
                     type='email'

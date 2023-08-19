@@ -49,8 +49,8 @@ useEffect(() => {
       <div className="profile">
         <div className="profile-first-container">
           <div className="profileTop">
-            <img src={user.coverPicture || PUBLIC_FOLDER + "post/3.jpeg"} alt="" className="profileBackImg"/>
-            <img src={user.profilePicture || PUBLIC_FOLDER + "person/noAvatar.png"} alt="" className="profileImg"/>
+            <img src={PUBLIC_FOLDER + user.coverPicture || PUBLIC_FOLDER + "post/3.jpeg"} alt="" className="profileBackImg"/>
+            <img src={PUBLIC_FOLDER + user.profilePicture || PUBLIC_FOLDER + "person/noAvatar.png"} alt="" className="profileImg"/>
           </div>
           <div className="profileName">
               <h2>{user.username}</h2>
@@ -73,7 +73,7 @@ useEffect(() => {
               <div>
                 <ul className="friendsList">
                   {friends.map((friend) => (
-                    <li className="friendList">
+                    <li className="friendList" key={friend.username}>
                         <Link to= {`/friends/${friend.username}`}>
                             <img
                             src={
@@ -84,7 +84,7 @@ useEffect(() => {
                             className='friendProfileImg'
                             />
                         </Link>
-                        <span className="friendUsername">{friend.username}</span>
+                        <h6 className="friendUsername">{friend.username}</h6>
                     </li>
                   ))}
                 </ul>

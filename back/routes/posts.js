@@ -100,27 +100,18 @@ router.get("/article/:userId", async (req, res) => {
 })
 
 
-
-
 //8.get all of favorite posts
-// router.get("/favorite/:userId", async (req, res) => {
-//     try{
-//         const currentUser = await User.findById(req.params.userId);
-//         const userPosts = await Post.find({ userId: currentUser._id });
-//         //get all of the friend's posts
-//         const friendPosts = await Promise.all(
-//             currentUser.followings.map(friendId => {
-//             return Post.find({ userId: friendId });
-//             })
-//         );
-//         const Articles = res.json(userPosts.concat(...friendPosts));  // combine my posts and friend's posts
-//         Articles.likes.filter((like)=>{
-//         return like == currentUser._id
-//         })
-//     }catch(err){
-//         return res.status(500).json(err);
-//     }
-// })
+router.get("/favorite/:userId", async (req, res) => {
+    try{
+        const currentUser = await User.findById(req.params.userId);
+        // const userPosts = await Post.find({ userId: currentUser._id });
+        //get all of the friend's posts
+        const likedPosts = await Post.find({likes : {"$in":[req.params.userId]}});
+        return res.json(likedPosts);
+    }catch(err){
+        return res.status(500).json(err);
+    }
+})
 
 
 

@@ -22,8 +22,10 @@ export default function Profile() {
     //to get a user data
     useEffect(() => {
         const fetchUser = async () => {
-            const res = await axios.get(`/users?username=${username}`);
-            setUser(res.data);
+            if(username !== undefined){
+                const res = await axios.get(`/users?username=${username}`);
+                setUser(res.data);
+            }
         };
         fetchUser();
     }, [username]);
@@ -32,10 +34,12 @@ export default function Profile() {
     //to show posts（friend's posts）
     useEffect(() => {
         const fetchPosts = async() => {
+        if(user._id !== undefined) {
             const response = await axios.get(`/posts/friends/${user._id}`) //post.js 6.
             setPosts(response.data.sort((post1,post2) => { //sort post
             return new Date(post2.createdAt) - new Date(post1.createdAt);
             }));
+        }
         };
         fetchPosts();
     }, [user._id]);
@@ -45,8 +49,10 @@ export default function Profile() {
     useEffect(() => {
         const getFriends = async() => {
             try{
+                if(user._id !== undefined) {
                 const friendList = await axios.get("/users/friends/" + user._id); //users.js 7
                 setFriends(friendList.data);
+                }
             }catch(err){
                 console.log(err);
             }
@@ -84,12 +90,12 @@ return (
             <div>
                 <ul className="friendsList">
                     {friends.map((friend) => (
-                        <li className="friendList">
+                        <li className="friendList" key={friend.username}>
                         <Link to= {`/friends/${friend.username}`}>
                             <img
                             src={
                             friend.profilePicture
-                            ? friend.profilePicture
+                            ? PUBLIC_FOLDER + friend.profilePicture
                             : PUBLIC_FOLDER + "person/noAvatar.png" }
                             alt=''
                             className='friendProfileImg'
@@ -116,3 +122,4 @@ return (
     </>
   )
 }
+

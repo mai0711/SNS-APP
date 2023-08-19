@@ -23,6 +23,7 @@
     "react-router-dom": "^6.14.2",
     "react-scripts": "5.0.0",
     "styled-components": "^5.3.11",
+    "timeago-react": "^3.0.6",
     "timeago.js": "^4.0.2",
     "web-vitals": "^2.1.4"
   },
@@ -51,7 +52,8 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3"
   },
   "proxy": "http://localhost:8000/api"
 }

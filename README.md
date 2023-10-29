@@ -28,6 +28,7 @@ Peaple who want to share their information, opinions, thoughts and pictures.
 
 # TECHNOLOGIES 
 <br>
+・ JavaScript<br>
 ・ Node.js<br>
 ・ React.js<br>
 ・ MongoDB<br>

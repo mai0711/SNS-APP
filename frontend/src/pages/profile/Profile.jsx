@@ -4,33 +4,47 @@ import "./Profile.css";
 import Row from 'react-bootstrap/Row';
 import Header from '../../components/Header/Header'
 import axios from "axios";
-import { useParams } from "react-router-dom"
-import { Friends } from '../../dummyData'
-import Friend from '../../components/Friend/Friend'
 import { AuthContext } from '../../state/AuthContext';
 import Article from '../../components/Article/Article';
+import { Link } from "react-router-dom";
 
 
 export default function Profile() {
 
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  const { user } = useContext(AuthContext); //user is from AuthContext.js, ログインしているユーザーのデータ
+  const { user } = useContext(AuthContext); //user is from AuthContext.js, current user's data
 
   const [posts, setPosts] = useState([]);
-  const username = useParams().username;
+  const [friends, setFriends] = useState([]);
 
-
-//postを表示するため（自分の投稿とフォローしている人の投稿）
-// usernameが変わるたびに発火
+//to show post（my post and following people's post）
 useEffect(() => {
-  const fetchPosts = async() => {
-    const response = await axios.get(`/posts/timeline/${user._id}`) //post.jsの9.
-    setPosts(response.data);
+  const fetchPosts = async () => {
+    try {
+      const response = await axios.get(`/posts/article/${user._id}`);
+      setPosts(response.data.sort((post1, post2) => {
+        return new Date(post2.createdAt) - new Date(post1.createdAt);
+      }));
+    } catch (err) {
+      console.log(err);
+    }
   };
   fetchPosts();
-}, [username]);
+}, [user._id]);
 
+//to show friends
+useEffect(() => {
+  const getFriends = async() => {
+    try{
+      const friendList = await axios.get("/users/friends/" + user._id); //users.js 7
+      setFriends(friendList.data);
+    }catch(err){
+      console.log(err);
+    }
+  };
+  getFriends();
+}, [user._id]);
 
   return (
     <>
@@ -38,8 +52,23 @@ useEffect(() => {
       <div className="profile">
         <div className="profile-first-container">
           <div className="profileTop">
-            <img src={user.coverPicture || PUBLIC_FOLDER + "/assets/post/3.jpeg"} alt="" className="profileBackImg"/>
-            <img src={user.profilePicture || PUBLIC_FOLDER + "/assets/person/noAvatar.png"} alt="" className="profileImg"/>
+          <img src={PUBLIC_FOLDER + user.coverPicture || PUBLIC_FOLDER + "noAvatar.png"} alt="" className="profileBackImg"/>
+          {/* <img
+            src={
+              user.coverPicture
+              ? PUBLIC_FOLDER + user.coverPicture
+              : PUBLIC_FOLDER + "noImage.png"}
+              alt=""
+              className="profileImg"
+            /> */}
+            <img
+            src={
+              user.profilePicture
+              ? PUBLIC_FOLDER + user.profilePicture
+              : PUBLIC_FOLDER + "noAvatar.png"}
+              alt=""
+              className="profileImg"
+            />
           </div>
           <div className="profileName">
               <h2>{user.username}</h2>
@@ -53,29 +82,39 @@ useEffect(() => {
                 <h3>{user.desc}</h3>
               </div>
             </div>
-
             <div className="bottomRight">
               <div className="friendsTitle">
                 <h2>Friends</h2>
               </div>
-
               <div>
-                <ul className="friendsList">
-                  {Friends.map((friend) => (
-                    <Friend friend={friend} key={friend.id} />
+                <ul className="friendsList" key={user.id}>
+                  {friends.map((friend) => (
+                    <li className="friendList">
+                        <Link to= {`/friends/${friend.username}`}>
+                            <img
+                            src={
+                            friend.profilePicture
+                            ? PUBLIC_FOLDER + friend.profilePicture
+                            : PUBLIC_FOLDER + "noAvatar.png" }
+                            alt=''
+                            className='friendProfileImg'
+                            />
+                        </Link>
+                        <h6 className="friendUsername">{friend.username}</h6>
+                    </li>
                   ))}
                 </ul>
               </div>
-
-
             </div>
           </div>
         <hr />
           <div className="profile-second-container">
-            <h1>POST and FRIEND'S ARTICLES</h1>
+            <h1>MY POSTS and FRIEND'S ARTICLES</h1>
             <Row xs={2} md={4} className="g-6">
               {posts.map((post) => (
-                <Article  post={post} key={post._id} />
+                <div>
+                  <Article  post={post} key={post._id} />
+                </div>
               ))}
             </Row>
           </div>

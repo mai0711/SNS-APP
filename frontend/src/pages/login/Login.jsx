@@ -5,21 +5,21 @@ import { useContext, useRef } from 'react';
 import { loginCall } from '../../state/ActionCalls';
 import { AuthContext } from '../../state/AuthContext';
 
+
 export default function Login() {
 
-    const email = useRef(); //emailに入力された値を参照(email input にref指定)
+    const email = useRef(); //to refer input value in form
     const password = useRef();
-    const { user, isFetching, error, dispatch } = useContext(AuthContext); // AuthContext.jsのvalueを使うことができるように
+    const { user, dispatch } = useContext(AuthContext); // to use value in AuthContext.js
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // console.log(email.current.value)
-        loginCall( //ActionCalls.jsから
+        loginCall( //loginCall comes from ActionCalls.js
             {
                 email: email.current.value,
                 password: password.current.value,
             },
-            dispatch //AuthContext.jsのvalue
+            dispatch //value in AuthContext.js
         );
     };
 

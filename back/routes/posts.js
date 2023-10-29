@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Post = require("../models/Post");
 const User = require("../models/User");
+const multer = require("multer")// to upload file
 
 //1.create a post
 router.post("/", async (req, res) => {
@@ -14,10 +15,13 @@ router.post("/", async (req, res) => {
     }
 });
 
-//2.update a post
-router.put("/:id", async(req, res) => { //id = post id
+//2.update a post (title and description)
+router.put("/:id", async(req, res) => { //:id = post id
     try{
         const post = await Post.findById(req.params.id);
+        console.log(post)
+        console.log(req.body._id)
+
         if(post.userId === req.body.userId){
             await post.updateOne( {$set: req.body} );
             return res.status(200).json("The post has been updated")
@@ -26,6 +30,31 @@ router.put("/:id", async(req, res) => { //id = post id
         }
     }catch(err){
         return res.status(500).json(err)
+    }
+})
+
+//2.update post (picture)
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {//destination = save location
+        cb(null, "public/images"); //store posted image in "public/images"
+    },
+    filename: (req, file, cb)=> {  //file name
+       cb(null, req.body.name ); //req.body.name = fileName in Post.jsx
+     //cb(null, file.originalname); //this is for checking in postman
+    },
+});
+
+const uploadPic =  multer({ storage: storage });
+router.put("/postPic/:id", uploadPic.single("file"), async (req, res) => { //:id = post id
+    try{
+        const post = await Post.findById(req.params.id);
+        await post.updateOne({ $set: { img:req.file.filename}});
+        // console.log(post)
+        // console.log(req.file.filename)
+        await post.save();
+        return res.status(200).json("Post picture is set successfully");
+    }catch(err){
+        console.log(err)
     }
 })
 
@@ -61,57 +90,29 @@ router.put("/:id/like", async(req, res) => { //id = post id
     }
 })
 
-//5.get a post
-router.get("/:id", async (req, res) => { //id = post id
+// //5.get all post
+router.get("/all", async(req, res) => {
     try{
-        const post = await Post.findById(req.params.id); //post id
-        res.status(200).json(post);
+        const allPosts = await Post.find({});
+        res.send(allPosts)
     }catch(err){
-        res.status(500).json(err);
-    }
-})
-
-//6.get all posts
-router.get("/api/v1/allPosts", async(req, res) =>{
-    try{
-        const allPosts = await Post.find({});
-        res.status(200).json(allPosts);
-    } catch(err) {
-        res.status(500).json(err);
-    }
-})
-
-//7.get only all of my posts
-router.get("/api/v1/allMyPosts", async(req, res) =>{
-    try{
-        //get all posts
-        const allPosts = await Post.find({});
-        //get only my posts
-        const myPosts = await Promise.all(
-            allPosts.filter((allMyPost) => {
-                return allMyPost.userId == req.body.userId
-            })
-            );
-            return res.status(200).json(myPosts);
-    } catch(err) {
         return res.status(500).json(err);
     }
 })
 
-//8.get all of my posts(profile page)
-router.get("/profile/:username", async (req, res) => {
+//6.get all of posts in friends's profile page
+router.get("/friends/:userId", async (req, res) => {
     try{
-        const user = await User.findOne({ username:req.params.username }); //1つのユーザー名から探すのでfindOne. findOneはプロパティが必要なのでusername:で指定
-        const posts = await Post.find({ userId: user._id });
+        const friend = await User.findById(req.params.userId);
+        const posts = await Post.find({ userId: friend._id });
         return res.status(200).json(posts);
     }catch(err){
         return res.status(500).json(err);
     }
 })
 
-//9.get all of following people's posts and my posts
-router.get("/timeline/:userId", async (req, res) => {
-// router.get("/profile/:userId", async (req, res) => {
+//7.get all of following people's posts and my posts
+router.get("/article/:userId", async (req, res) => {
     try{
         const currentUser = await User.findById(req.params.userId);
         const userPosts = await Post.find({ userId: currentUser._id });
@@ -126,6 +127,21 @@ router.get("/timeline/:userId", async (req, res) => {
         return res.status(500).json(err);
     }
 })
+
+
+//8.get all of favorite posts
+router.get("/favorite/:userId", async (req, res) => {
+    try{
+        const currentUser = await User.findById(req.params.userId);
+        // const userPosts = await Post.find({ userId: currentUser._id });
+        //get all of the friend's posts
+        const likedPosts = await Post.find({likes : {"$in":[req.params.userId]}});
+        return res.json(likedPosts);
+    }catch(err){
+        return res.status(500).json(err);
+    }
+})
+
 
 
 module.exports = router;

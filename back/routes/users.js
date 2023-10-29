@@ -13,22 +13,22 @@ const User = require("../models/User")
 //     }
 // })
 
-//2.update user
-router.put("/:id", async (req, res) => { // :id = params.id
-    if(req.body.userId === req.params.id || req.body.isAdmin){
-        try{
-            const user = await User.findByIdAndUpdate(req.params.id, {
-                $set: req.body,
-            });
-            return res.status(200).json("Account has been updated");
-        }catch(err){
-            return res.status(500).json(err);
-        }
-    }else{
-        return res.status(403)
-        .json("You can update only your account");
-    }
-});
+// //2.update user
+// router.put("/:id", async (req, res) => { // :id = params.id
+//     if(req.body.userId === req.params.id || req.body.isAdmin){
+//         try{
+//             const user = await User.findByIdAndUpdate(req.params.id, {
+//                 $set: req.body,
+//             });
+//             return res.status(200).json("Account has been updated");
+//         }catch(err){
+//             return res.status(500).json(err);
+//         }
+//     }else{
+//         return res.status(403)
+//         .json("You can update only your account");
+//     }
+// });
 
 //3.delete user
 router.delete("/:id", async (req, res) => {
@@ -46,15 +46,14 @@ router.delete("/:id", async (req, res) => {
 });
 
 
-
-//4.クエリでユーザー情報を取得
+//4.get a user data from query
 router.get("/", async(req, res) => {
-    const userId = req.query.userId; //queryはurlを打ち込んだときの?以降の部分
+    const userId = req.query.userId;
     const username = req.query.username;
     try{
         const user = userId
-        ? await User.findById(userId) // userIdが存在するならば、userIdと適合するものを探す
-        : await User.findOne({ username: username }); //userIdが存在しないならusernameと適合するものを探す
+        ? await User.findById(userId)
+        : await User.findOne({ username: username });
         const { password, updatedAt, ...other } = user._doc;  //get a user information except for password and updatedAt
         return res.status(200).json(other);
     }catch(err){
@@ -103,6 +102,26 @@ router.put("/:id/unfollow", async (req, res) => { // :id = params.id
         }
     }else{ // req.body.userId ==== req.params.id = my id
         return res.status(403).json("You can't unfollow yourself")
+    }
+})
+
+//7.get friends
+router.get("/friends/:userId", async(req,res) => {
+    try{
+        const user = await User.findById(req.params.userId);
+        const friends = await Promise.all(
+            user.followings.map((friendId) => {
+                return User.findById(friendId);
+            })
+        );
+        let friendList = [];
+        friends.map((friend) => {
+            const { _id, username, profilePicture } = friend;
+            friendList.push({ _id, username, profilePicture });
+        });
+        res.status(200).json(friendList)
+    }catch(err){
+        res.status(500).json(err)
     }
 })
 

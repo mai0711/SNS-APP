@@ -1,7 +1,10 @@
 import './Home.css';
 import { Link } from 'react-router-dom'
 
+
 function Home() {
+
+  const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
 
   return (
     <>
@@ -12,25 +15,26 @@ function Home() {
             <div><Link className="login-button" to="/login">LOGIN</Link></div>
           </div>
         </div>
-        <h1 className="logo">Logo</h1>
+        <img
+            src={PUBLIC_FOLDER + "logo/logo.png"}
+            alt='logo'
+            className="homeLogo" />
       </div>
-
       <div className="second-container">
         <div className="about-left">
           <img src='https://images.unsplash.com/photo-1533038590840-1cde6e668a91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80' alt='img'></img>
         </div>
         <div className="about-right">
-          <h1>ABOUT</h1>
-          <h5>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Debitis provident quaerat eaque, assumenda asperiores veritatis quod ea est quisquam architecto reprehenderit inventore nostrum sed fugiat dignissimos velit sequi minima doloremque.</h5>
+          <h4>You can easily make a blog and share your information, opinions, thoughts and pictures with people all over the world</h4>
         </div>
       </div>
-
       <div className="last-container">
         <div className="subscription">
           <h1>SUBSCRIBE</h1>
           <input
                 type='text'
                 placeholder="Email"
+                className='subscription-input'
             />
           <button className='subscription-btn'>SUBSCRIBE</button>
         </div>
@@ -39,7 +43,6 @@ function Home() {
           <div className="login-link"><Link className="login-button" to="/login">LOGIN</Link></div>
         </div>
       </div>
-
     </>
   )
 }

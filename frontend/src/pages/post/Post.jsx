@@ -1,6 +1,5 @@
 import "./Post.css"
-import React, { useContext, useRef } from 'react'
-import { Image, Gif, Face, Analytics } from "@mui/icons-material";
+import React, { useContext, useRef, useState } from 'react'
 import { AuthContext } from "../../state/AuthContext"
 import axios from 'axios';
 import Header from "../../components/Header/Header";
@@ -13,16 +12,33 @@ export default function Post() {
     const desc = useRef()
     const title = useRef()
 
+    const [file, setFile] = useState(null);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const newPost = {
-          userId: user._id, //誰が投稿するか（今ログインしているユーザー）
-          description: desc.current.value, //inputで入力した文字
-        };
-        //api
+          userId: user._id, //who post the article（current user）
+          title: title.current.value, //current.value = input words in title
+          description: desc.current.value
+        }
+        //upload file
+        if(file){
+          const data = new FormData(); //make new data
+          const fileName = Date.now() + file.name;
+          data.append("name", fileName); // "name" = key
+          data.append("file", file); //"file" = key
+          newPost.img = fileName;
+          try{
+            //API for upload file
+            await axios.post("/upload", data); //upload.js
+          }catch(err){
+            console.log(err)
+          }
+        }
+        //API for post
         try {
-          await axios.post("/posts", newPost); //post.jsの1
-          window.location.reload(); //投稿した後、自分でリロードしなくても良くなる
+          await axios.post("/posts", newPost); //post.js 1
+          window.location.reload(); //reload automatically after posted
         } catch(err) {
             console.log(err);
         }
@@ -38,8 +54,8 @@ export default function Post() {
             <img
             src={
               user.profilePicture
-              ? user.profilePicture
-              : PUBLIC_FOLDER + "/assets/person/noAvatar.png"}
+              ? PUBLIC_FOLDER + user.profilePicture
+              : PUBLIC_FOLDER + "noAvatar.png"}
               alt=""
             />
             <div className="profileName">
@@ -64,7 +80,13 @@ export default function Post() {
                   placeholder="Description"
                   ref={desc}
               />
-              <input type="file" className="post-file" name="picture" accept="image/jpeg, image/png"></input>
+              <input
+              type="file"
+              className="post-file"
+              name="picture"
+              accept='.png, .jpeg, .jpg'
+              onChange={(e) => setFile(e.target.files[0])}
+              />
             <button className="post-button" type='submit' >POST</button>
           </form>
       </div>

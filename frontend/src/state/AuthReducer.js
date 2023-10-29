@@ -1,17 +1,14 @@
-//2,
-//reducer = 初期値のstateの状態を新しいstateの状態に更新する処理の内容
-
-const AuthReducer = (state, action) => { //actionはAuthActions.jsで設定したaction
-    switch(action.type) {  //actionのtypeに応じてどのstate状態にするか変える
+const AuthReducer = (state, action) => {
+    switch(action.type) {
         case "LOGIN_START":
             return {
                 user: null,
-                isFetching: true, //isFetching = 情報を取得するのかどうか
+                isFetching: true,
                 error: false,
             };
         case "LOGIN_SUCCESS":
             return {
-                user: action.payload, //AuthActions.jsで設定したLoginSuccessのPayload(user)
+                user: action.payload,
                 isFetching: false,
                 error: false,
             };
@@ -21,8 +18,26 @@ const AuthReducer = (state, action) => { //actionはAuthActions.jsで設定し�
                 isFetching: true,
                 error: true,
             };
+        case "FOLLOW":
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    followings: [...state.user.followings, action.payload],
+                },
+            };
+        case "UNFOLLOW":
+        return {
+            ...state,
+            user: {
+                ...state.user,
+                followings: state.user.followings.filter(
+                (following)=>following !== action.payload
+                ),
+            },
+        };
         default:
-            return state; //最終的な状態（新しい状態）を返す
+            return state;
     }
 };
 

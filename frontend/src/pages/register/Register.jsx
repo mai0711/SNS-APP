@@ -4,10 +4,11 @@ import "./Register.css";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+
 export default function Register() {
 
     const username= useRef();
-    const email = useRef(); //emailに入力された値を参照(email input にref指定)
+    const email = useRef(); //to refer input value in form
     const password = useRef();
     const confirmPassword = useRef();
 
@@ -15,12 +16,12 @@ export default function Register() {
 
     const handleClick = async(e) => {
         e.preventDefault();
-        //パスワードと確認パスワードが同じか
+        //to check password and confirm password
         if(password.current.value !== confirmPassword.current.value){
-            confirmPassword.current.setCustomValidity("Incorrect Password"); //setCustomValidity = あってるかを自動で確認してくれる
+            confirmPassword.current.setCustomValidity("Incorrect Password"); //setCustomValidity = to confirm if password is correct automatically
         }else {
             try{
-                //userの登録
+                //register user
                 const user ={
                     username: username.current.value,
                     email: email.current.value,

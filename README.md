@@ -5,6 +5,7 @@
 <br>
 <br>
 
+
 ## Home
 ![image](home.jpg)
 <br>
@@ -22,26 +23,35 @@
 
 ## post page
 ![image](post.jpg)
+
 <br>
 
 # DESCRIPTION
 ## ABOUT THE PROJECT
+
 This app is a social media platform. It features a minimalist design with predominantly green elements, as shown in the image. This is intended to create a sense of safety for users, encouraging them to freely express their thoughts.
+
 <br>
 <br>
 
 ## OBJECT OF THE PROJECT
+
 This app allows anyone to easily create a blog and share their information, opinions, thoughts, and pictures with people all over the world."
+
 <br>
 <br>
 
 ## TARGET USERS
+
 The target audience is composed of people who want to share their information, opinions, thoughts, and pictures.
+
 <br>
 <br>
 <br>
 
-# TECHNOLOGIES
+
+# TECHNOLOGIES 
+
 <br>
 ・ JavaScript<br>
 ・ Node.js<br>

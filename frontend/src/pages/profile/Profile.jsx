@@ -20,15 +20,18 @@ export default function Profile() {
 
 //to show post（my post and following people's post）
 useEffect(() => {
-  const fetchPosts = async() => {
-    const response = await axios.get(`/posts/article/${user._id}`) //post.js 7.
-    setPosts(response.data.sort((post1,post2) => { //sort post
-      return new Date(post2.createdAt) - new Date(post1.createdAt);
-    }));
+  const fetchPosts = async () => {
+    try {
+      const response = await axios.get(`/posts/article/${user._id}`);
+      setPosts(response.data.sort((post1, post2) => {
+        return new Date(post2.createdAt) - new Date(post1.createdAt);
+      }));
+    } catch (err) {
+      console.log(err);
+    }
   };
   fetchPosts();
 }, [user._id]);
-
 
 //to show friends
 useEffect(() => {
@@ -49,8 +52,23 @@ useEffect(() => {
       <div className="profile">
         <div className="profile-first-container">
           <div className="profileTop">
-            <img src={user.coverPicture || PUBLIC_FOLDER + "post/3.jpeg"} alt="" className="profileBackImg"/>
-            <img src={user.profilePicture || PUBLIC_FOLDER + "person/noAvatar.png"} alt="" className="profileImg"/>
+          <img src={PUBLIC_FOLDER + user.coverPicture || PUBLIC_FOLDER + "noAvatar.png"} alt="" className="profileBackImg"/>
+          {/* <img
+            src={
+              user.coverPicture
+              ? PUBLIC_FOLDER + user.coverPicture
+              : PUBLIC_FOLDER + "noImage.png"}
+              alt=""
+              className="profileImg"
+            /> */}
+            <img
+            src={
+              user.profilePicture
+              ? PUBLIC_FOLDER + user.profilePicture
+              : PUBLIC_FOLDER + "noAvatar.png"}
+              alt=""
+              className="profileImg"
+            />
           </div>
           <div className="profileName">
               <h2>{user.username}</h2>
@@ -64,22 +82,20 @@ useEffect(() => {
                 <h3>{user.desc}</h3>
               </div>
             </div>
-
             <div className="bottomRight">
               <div className="friendsTitle">
                 <h2>Friends</h2>
               </div>
-
               <div>
-                <ul className="friendsList">
+                <ul className="friendsList" key={user.id}>
                   {friends.map((friend) => (
-                    <li className="friendList" key={friend.username}>
+                    <li className="friendList">
                         <Link to= {`/friends/${friend.username}`}>
                             <img
                             src={
                             friend.profilePicture
-                            ? friend.profilePicture
-                            : PUBLIC_FOLDER + "person/noAvatar.png" }
+                            ? PUBLIC_FOLDER + friend.profilePicture
+                            : PUBLIC_FOLDER + "noAvatar.png" }
                             alt=''
                             className='friendProfileImg'
                             />
@@ -89,16 +105,16 @@ useEffect(() => {
                   ))}
                 </ul>
               </div>
-
-
             </div>
           </div>
         <hr />
           <div className="profile-second-container">
-            <h1>POST and FRIEND'S ARTICLES</h1>
+            <h1>MY POSTS and FRIEND'S ARTICLES</h1>
             <Row xs={2} md={4} className="g-6">
               {posts.map((post) => (
-                <Article  post={post} key={post._id} />
+                <div>
+                  <Article  post={post} key={post._id} />
+                </div>
               ))}
             </Row>
           </div>

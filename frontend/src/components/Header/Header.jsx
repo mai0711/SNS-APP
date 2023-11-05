@@ -1,7 +1,7 @@
 import './Header.css'
 import { useContext } from 'react';
 import { Link } from 'react-router-dom'
-import SearchIcon from '@mui/icons-material/Search';
+// import SearchIcon from '@mui/icons-material/Search';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -21,16 +21,17 @@ function Header() {
 		window.location.href = '/';
 	};
 
-
   return (
     <div className="headerContainer">
         <div className="headerLeft">
+        <Link className="headerLink" to={"/"}>
             <img
             src={PUBLIC_FOLDER + "logo/logo4.png"}
             alt='logo'
             className="logo" />
+        </Link>
         </div>
-        <div className="headerCenter">
+        {/* <div className="headerCenter">
             <div className="searchBar">
                 <SearchIcon className="searchIcon" />
                 <input
@@ -38,14 +39,14 @@ function Header() {
                 className="searchInput"
                 />
             </div>
-        </div>
+        </div> */}
         <div className="headerRight">
             <div className="headerIcons">
                 <div className="headerIconItem">
-                    <Link className="headerLink" to="/"><HomeIcon /></Link>
+                    <Link className="headerLink" to={`/allPosts/${user.username}`}><HomeIcon /></Link>
                 </div>
                 <div className="headerIconItem">
-                    <Link className="headerLink" to="/setPic"><SettingsIcon /></Link>
+                    <Link className="headerLink" to={`/setting/${user.username}`}><SettingsIcon /></Link>
                 </div>
                 <div className="headerIconItem">
                     <Link className="headerLink" to={`/profile/${user.username}`}><PersonIcon /></Link>

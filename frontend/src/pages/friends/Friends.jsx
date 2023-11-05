@@ -1,23 +1,31 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import "./Friends.css";
 import Row from 'react-bootstrap/Row';
 import Header from '../../components/Header/Header'
 import axios from "axios";
 import Article from '../../components/Article/Article';
+import { AuthContext } from "../../state/AuthContext";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 
 export default function Profile() {
 
     const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
-
+    const { user: currentUser, dispatch } = useContext(AuthContext);
     const [posts, setPosts] = useState([]);
     const [user, setUser] = useState({});
     const [friends, setFriends] = useState([]);
-
+    const [followed, setFollowed] = useState(currentUser.followings.includes(user?._id));
     const username = useParams().username;
+
+    //follow
+    useEffect(()=>{
+        setFollowed(currentUser.followings.includes(user?._id))
+    }, [currentUser, user._id]);
 
     //to get a user data
     useEffect(() => {
@@ -25,11 +33,10 @@ export default function Profile() {
             if(username !== undefined){
                 const res = await axios.get(`/users?username=${username}`);
                 setUser(res.data);
-        }
+            }
         };
         fetchUser();
     }, [username]);
-
 
     //to show posts（friend's posts）
     useEffect(() => {
@@ -42,8 +49,7 @@ export default function Profile() {
         }
         };
         fetchPosts();
-    }, [user._id]);
-
+    }, [user]);
 
     //to show friends
     useEffect(() => {
@@ -60,6 +66,24 @@ export default function Profile() {
         getFriends();
     }, [user._id]);
 
+    //to follow friends
+    const handleClick = async () => {
+        try {
+            if(followed) {
+            await axios.put(`/users/${user._id}/unfollow`, { //users.js 6
+            userId: currentUser._id,
+            });
+            dispatch({ type: "UNFOLLOW", payload: user._id });
+            } else {
+            await axios.put(`/users/${user._id}/follow`, { //users.js 5
+            userId: currentUser._id,
+            });
+            dispatch({ type: "FOLLOW", payload: user._id });
+            }
+        setFollowed(!followed);
+        } catch (err) {
+        }
+    };
 
 return (
     <>
@@ -67,11 +91,19 @@ return (
         <div className="profile">
         <div className="profile-first-container">
             <div className="profileTop">
-                <img src={user.coverPicture || PUBLIC_FOLDER + "post/3.jpeg"} alt="" className="profileBackImg"/>
-                <img src={user.profilePicture || PUBLIC_FOLDER + "person/noAvatar.png"} alt="" className="profileImg"/>
+                <img src={PUBLIC_FOLDER + user.coverPicture || PUBLIC_FOLDER + "noImage.jpeg"} alt="" className="profileBackImg"/>
+                <img src={PUBLIC_FOLDER + user.profilePicture || PUBLIC_FOLDER + "noAvatar.png"} alt="" className="profileImg"/>
             </div>
             <div className="profileName">
                 <h2>{user.username}</h2>
+            </div>
+            <div className='follow'>
+                {user.username !== currentUser.username && (
+                <button className="followButton" onClick={handleClick}>
+                    {followed ? "Unfollow" : "Follow"}
+                    {followed ? <RemoveIcon />: <AddIcon /> }
+                </button>
+                )}
             </div>
             <div className="profileBottom">
                 <div className="bottomLeft">
@@ -95,8 +127,8 @@ return (
                             <img
                             src={
                             friend.profilePicture
-                            ? friend.profilePicture
-                            : PUBLIC_FOLDER + "person/noAvatar.png" }
+                            ? PUBLIC_FOLDER + friend.profilePicture
+                            : PUBLIC_FOLDER + "noAvatar.png" }
                             alt=''
                             className='friendProfileImg'
                             />
@@ -122,3 +154,4 @@ return (
     </>
   )
 }
+

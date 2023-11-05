@@ -54,8 +54,8 @@ export default function Post() {
             <img
             src={
               user.profilePicture
-              ? user.profilePicture
-              : PUBLIC_FOLDER + "person/noAvatar.png"}
+              ? PUBLIC_FOLDER + user.profilePicture
+              : PUBLIC_FOLDER + "noAvatar.png"}
               alt=""
             />
             <div className="profileName">
@@ -83,10 +83,8 @@ export default function Post() {
               <input
               type="file"
               className="post-file"
-              // id='file'
               name="picture"
               accept='.png, .jpeg, .jpg'
-              // style={{display: "none"}}
               onChange={(e) => setFile(e.target.files[0])}
               />
             <button className="post-button" type='submit' >POST</button>

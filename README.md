@@ -5,28 +5,53 @@
 <br>
 <br>
 
-![image](image.jpg)
+
+## Home
+![image](home.jpg)
+<br>
+<br>
+
+## Login / Register
+![image](login.jpg)
+
+
+## Profile page
+![image](profile.jpg)
+
+## Setting page
+![image](setting.jpg)
+
+## post page
+![image](post.jpg)
 
 <br>
 
 # DESCRIPTION
 ## ABOUT THE PROJECT
-I would like to continue with the idea, minimalist and green as seen in the image to give the users the feeling that they are in a safe place and they can accomodate their dislikes and thoughts.
+
+This app is a social media platform. It features a minimalist design with predominantly green elements, as shown in the image. This is intended to create a sense of safety for users, encouraging them to freely express their thoughts.
+
 <br>
 <br>
 
 ## OBJECT OF THE PROJECT
-I created this application so that anyone can easily make a blog and share theire information, opinions, thoughts and pictures with people all over the world.
+
+This app allows anyone to easily create a blog and share their information, opinions, thoughts, and pictures with people all over the world."
+
 <br>
 <br>
 
 ## TARGET USERS
-Peaple who want to share their information, opinions, thoughts and pictures.
+
+The target audience is composed of people who want to share their information, opinions, thoughts, and pictures.
+
 <br>
 <br>
 <br>
 
+
 # TECHNOLOGIES 
+
 <br>
 ・ JavaScript<br>
 ・ Node.js<br>
